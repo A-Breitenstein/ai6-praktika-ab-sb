@@ -49,7 +49,7 @@ oma(Oma,Kind):- mutter(X,Kind),mutter(Oma,X).
 opa(Opa,Kind):- vater(X,Kind),vater(Opa,X).
 opa(Opa,Kind):- mutter(X,Kind),vater(Opa,X).
 
-
+%vorfahre(Vorfahre, Person):-  listeniteration!?
 
 
 
