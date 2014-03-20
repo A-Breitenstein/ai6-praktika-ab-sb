@@ -112,7 +112,16 @@ cousine(Cousine,Person):- (vater(X,Cousine);mutter(X,Cousine)),
                         weiblich(Cousine).
 
 % X ist Schwager von Y :: schwager(X,Y)
-schwager(X,Y):- (schwester(Z,Y);(ehemann(Xn,Y),(schwester(Z,Xn);bruder(Z,Xn)))),(ehemann(X,Z);ehemann(Z,Y)).
+schwager(X,X):- !,fail.
+schwager(X,Y):- ehemann(X,Y),!,fail.
+schwager(X,Y):- schwester(G,Y), ehemann(X,G).
+schwager(X,Y):- ehemann(Yn,Y),bruder(X,Yn).
+schwager(X,Y):- ehemann(Yn,Y),schwester(G,Yn), ehemann(X,G).
+
 
 % X ist Schwaegerin von Y :: schwaegerin(X,Y)
-schwaegerin(X,Y):- (bruder(Z,Y);(ehemann(Xn,Y),(schwester(Z,Xn);bruder(Z,Xn)))),(ehemann(Z,X);ehemann(Y,Z)).
+schwaegerin(X,X):- !,fail.
+schwaegerin(X,Y):- ehemann(Y,X),!,fail.
+schwaegerin(X,Y):- bruder(G,Y), ehemann(G,X).
+schwaegerin(X,Y):- ehemann(Yn,Y),schwester(G,Yn).
+schwaegerin(X,Y):- ehemann(Yn,Y),bruder(G,Yn),ehemann(G,X).
