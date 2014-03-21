@@ -70,35 +70,43 @@ ehemann(hans,charline).
 
 
 % X ist Oma von Y :: oma(X,Y)
+oma(X,X):- !,fail.
 oma(Oma,Kind):- vater(X,Kind),mutter(Oma,X).
 oma(Oma,Kind):- mutter(X,Kind),mutter(Oma,X).
 
+opa(X,X):- !,fail.
 opa(Opa,Kind):- vater(X,Kind),vater(Opa,X).
 opa(Opa,Kind):- mutter(X,Kind),vater(Opa,X).
 
 % X ist vorfahre von Y  ::  vorfahre(X,Y)
+% precondition geht nicht? (X,X):- !,fail.
 vorfahre(Vorfahre, Vorfahre).
 vorfahre(Vorfahre, Person):- mutter(NeuePerson,Person), vorfahre(Vorfahre, NeuePerson).
 vorfahre(Vorfahre, Person):- vater(NeuePerson,Person), vorfahre(Vorfahre, NeuePerson).
 
 % X ist Bruder von Y :: bruder(X,Y)
+bruder(X,X):- !,fail.
 bruder(Bruder,Person):- vater(Vater,Bruder),vater(Vater,Person),maennlich(Bruder).
 bruder(Bruder,Person):- mutter(Mutter,Bruder),mutter(Mutter,Person),maennlich(Bruder).
 
 % X ist Schwester von Y :: schwester(X,Y)
+schwester(X,X):- !,fail.
 schwester(Schwester,Person):- vater(Vater,Schwester),vater(Vater,Person),weiblich(Schwester).
 schwester(Schwester,Person):- mutter(Mutter,Schwester),mutter(Mutter,Person),weiblich(Schwester).
 
 
 % X ist Onkel von Y :: onkel(X,Y)
+onkel(X,X):- !,fail.
 onkel(Onkel,Person):- vater(Vater,Person),bruder(Onkel,Vater).
 onkel(Onkel,Person):- mutter(Mutter,Person),bruder(Onkel,Mutter).
 
 % X ist Tante von Y :: tante(X,Y)
+tante(X,X):- !,fail.
 tante(Tante,Person):- vater(Vater,Person),bruder(Tante,Vater).
 tante(Tante,Person):- mutter(Mutter,Person),bruder(Tante,Mutter).
 
 % X ist Cousin von Y :: cousin(X,Y)
+cousin(X,X):- !,fail.
 cousin(Cousin,Person):- (vater(X,Cousin);mutter(X,Cousin)),
                         (vater(Y,Person);mutter(Y,Person)),
                         (bruder(X,Y);schwester(X,Y);bruder(Y,X);schwester(Y,X)),
@@ -106,6 +114,7 @@ cousin(Cousin,Person):- (vater(X,Cousin);mutter(X,Cousin)),
                         
                         
 % X ist Cousine von Y :: cousine(X,Y)
+cousine(X,X):- !,fail.
 cousine(Cousine,Person):- (vater(X,Cousine);mutter(X,Cousine)),
                         (vater(Y,Person);mutter(Y,Person)),
                         (bruder(X,Y);schwester(X,Y);bruder(Y,X);schwester(Y,X)),
