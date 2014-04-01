@@ -1,8 +1,6 @@
 package edu.ncsu.csc326.coffeemaker;
 
 import edu.ncsu.csc326.coffeemaker.exceptions.InventoryException;
-import junit.framework.Assert;
-import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import static org.junit.Assert.*;
@@ -17,6 +15,7 @@ import static org.junit.Assert.*;
 public class CoffeeMakerTest {
 
     private CoffeeMaker cm;
+    private CoffeeMaker cm_recipe_test;
     private Recipe r1;
     private Recipe r2;
     private Recipe r3;
@@ -62,17 +61,46 @@ public class CoffeeMakerTest {
         r4.setAmtSugar("1");
         r4.setPrice("65");
 
+        cm_recipe_test = new CoffeeMaker();
+
+        cm_recipe_test.addRecipe(r1);
+        cm_recipe_test.addRecipe(r2);
+        cm_recipe_test.addRecipe(r3);
+
     }
 
 
     @Test
     public void testAddRecipe() throws Exception {
+        // recipe must be unique
+        assertFalse(cm_recipe_test.addRecipe(r1));
+        // added only 3 recipes, so getRecipes must be 3
+        assertEquals(3, cm.getRecipes().length);
+
+        // recipe1 price must be 50
+        assertEquals(50,r1.getPrice());
+        assertEquals(0 ,r1.getAmtChocolate());
+        assertEquals(3 ,r1.getAmtCoffee());
+        assertEquals(1 ,r1.getAmtMilk());
+        assertEquals(1 ,r1.getAmtSugar());
+
+        // status message missing on adding recipes
 
     }
 
     @Test
     public void testDeleteRecipe() throws Exception {
+        final Recipe[] recipes = cm_recipe_test.getRecipes();
+        final int length = recipes.length;
+        int itemID = 0;
+        for (int i = 0; i < length; i++) {
+            if (recipes[i] != null && recipes[i].getName().equals(r1.getName()))
+                itemID = i;
+        }
+        assertEquals(r1.getName(), cm_recipe_test.deleteRecipe(itemID));
+        assertTrue(cm_recipe_test.deleteRecipe(itemID) == null);
 
+        // status message missing on deleting recipes
     }
 
     @Test
