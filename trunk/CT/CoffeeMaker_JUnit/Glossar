@@ -1,0 +1,44 @@
+Software Qualität:
+
+Softwarequalität ist die Gesamtheit der Merkmale eines Softwareprodukts,
+die sich auf dessen Eignung beziehen,
+festgelegte und vorausgesetzte Erfordernisse zu erfüllen(DIN ISO 9126)
+
+Merkmale -
+
+Funktionalität -
+Existenz eines Satzes von Funktionen mit spezifizierten Eigenschaften
+
+Zuverlässigkeit -
+Fähigkeit, Leistungsniveau über einen Zeitraum aufrecht zu erhalten
+
+Benutzbarkeit -
+Aufwand zur Benutzung und individuelle Beurteilung der Benutzung
+
+Effizienz -
+Verhältnis Leistungsniveau / eingesetzte Betriebsmittel
+
+Änderbarkeit -
+Aufwand zur Durchführung von Änderungen
+
+Übertragbarkeit -
+Eignung zur Übertragung in andere Umgebung
+
+(DIN ISO 9126, siehe SE2 Folie: se2-8.pdf[S. 18])
+
+Unit-Test:
+
+Ein Modultest (auch Komponententest oder oft vom engl. unit test als Unittest bezeichnet) wird in der Softwareentwicklung angewendet,
+um die funktionalen Einzelteile ('Module') von Computerprogrammen zu testen, d. h. sie auf korrekte Funktionalität zu prüfen.
+(http://de.wikipedia.org/wiki/Modultest)
+
+Stress-Test:
+
+Unter einem Lasttest (Lehnübersetzung von Load Testing) versteht man einen Softwaretest, mit dem eine zu erwartende,
+auch extreme Last auf dem laufenden System erzeugt und das Verhalten desselbigen beobachtet und untersucht wird.
+Dazu kann eine Simulation eingesetzt werden. Ziel dabei ist es:
+
+- Fehler aufzudecken, die im funktional orientierten Systemtest/Integrationstest nicht gefunden wurden.
+- Erfüllung nichtfunktionaler Anforderungen, wie z. B. geforderte Antwortzeiten sowie Mengenverarbeitungen, für den Produktivbetrieb nachzuweisen.
+- Die Dimensionierung der Hardwareausstattung zu überprüfen.
+(http://de.wikipedia.org/wiki/Lasttest_(Computer))
