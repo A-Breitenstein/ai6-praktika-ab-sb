@@ -105,7 +105,34 @@ public class CoffeeMakerTest {
 
     @Test
     public void testEditRecipe() throws Exception {
+        cm.addRecipe(r1);
+        String name = cm.editRecipe(0, r2);
 
+        if (name == null) {
+            fail("Name should be the name of the edited recipe");
+        }
+
+        if (!name.equals(r1.getName())) {
+            fail("Name should equal the name of the edited recipe");
+        }
+
+        Recipe editedRecipe = cm.getRecipes()[0];
+
+        boolean recipeName = editedRecipe.getName().equals(r1.getName());
+
+        if (!recipeName) {
+            fail("Name of the Receipe is not the same as before");
+        }
+
+        boolean setAmtChocolate = editedRecipe.getAmtChocolate() == r2.getAmtChocolate();
+        boolean setAmtCoffee = editedRecipe.getAmtCoffee() == r2.getAmtChocolate();
+        boolean setAmtMilk = editedRecipe.getAmtMilk() == r2.getAmtMilk();
+        boolean setAmtSugar = editedRecipe.getAmtSugar() == r2.getAmtSugar();
+        boolean setPrice = editedRecipe.getPrice() == r2.getPrice();
+
+        if (!(setAmtChocolate && setAmtCoffee && setAmtMilk && setAmtSugar && setPrice)) {
+            fail("Recipe was not edited");
+        }
     }
 
     @Test
