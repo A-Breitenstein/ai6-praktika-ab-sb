@@ -67,70 +67,69 @@ ehemann(alex,laura).
 ehemann(sven,alina).
 ehemann(hans,charline).
 
+verheiratet(alex,laura).
+verheiratet(sven,alina).
+verheiratet(hans,charline).
+
+verheiratetA(X,Y) :- verheiratet(Y,X).
+verheiratetA(X,Y) :- verheiratet(X,Y).
+
+
+geschwister(X,Y):- bruder(X,Y).
+geschwister(X,Y):- bruder(Y,X).
+geschwister(X,Y):- schwester(X,Y).
+geschwister(X,Y):- schwester(Y,X).
+
 
 
 % X ist Oma von Y :: oma(X,Y)
-oma(X,X):- !,fail.
+
 oma(Oma,Kind):- vater(X,Kind),mutter(Oma,X).
 oma(Oma,Kind):- mutter(X,Kind),mutter(Oma,X).
 
-opa(X,X):- !,fail.
 opa(Opa,Kind):- vater(X,Kind),vater(Opa,X).
 opa(Opa,Kind):- mutter(X,Kind),vater(Opa,X).
 
 % X ist vorfahre von Y  ::  vorfahre(X,Y)
-% precondition geht nicht? (X,X):- !,fail.
-vorfahre(Vorfahre, Vorfahre).
-vorfahre(Vorfahre, Person):- mutter(NeuePerson,Person), vorfahre(Vorfahre, NeuePerson).
-vorfahre(Vorfahre, Person):- vater(NeuePerson,Person), vorfahre(Vorfahre, NeuePerson).
+
+vorfahre(Eltern,Person):- elternteil(Eltern,Person).
+vorfahre(Vorfahre,Person):- elternteil(Eltern,Person),vorfahre(Vorfahre,Eltern).
 
 % X ist Bruder von Y :: bruder(X,Y)
-bruder(X,X):- !,fail.
-bruder(Bruder,Person):- vater(Vater,Bruder),vater(Vater,Person),maennlich(Bruder).
-bruder(Bruder,Person):- mutter(Mutter,Bruder),mutter(Mutter,Person),maennlich(Bruder).
+bruder(Bruder,Person):- vater(Vater,Bruder),vater(Vater,Person),maennlich(Bruder), Bruder \= Person.
+bruder(Bruder,Person):- mutter(Mutter,Bruder),mutter(Mutter,Person),maennlich(Bruder), Bruder \= Person.
 
 % X ist Schwester von Y :: schwester(X,Y)
-schwester(X,X):- !,fail.
-schwester(Schwester,Person):- vater(Vater,Schwester),vater(Vater,Person),weiblich(Schwester).
-schwester(Schwester,Person):- mutter(Mutter,Schwester),mutter(Mutter,Person),weiblich(Schwester).
+schwester(Schwester,Person):- vater(Vater,Schwester),vater(Vater,Person),weiblich(Schwester), Schwester \= Person.
+schwester(Schwester,Person):- mutter(Mutter,Schwester),mutter(Mutter,Person),weiblich(Schwester), Schwester \= Person.
 
+% X ist Elternteil von Y
+elternteil(X,Y):- vater(X,Y).
+elternteil(X,Y):- mutter(X,Y).
 
 % X ist Onkel von Y :: onkel(X,Y)
-onkel(X,X):- !,fail.
-onkel(Onkel,Person):- vater(Vater,Person),bruder(Onkel,Vater).
-onkel(Onkel,Person):- mutter(Mutter,Person),bruder(Onkel,Mutter).
+onkel(Onkel,Person):- maennlich(Onkel),elternteil(Elternteil,Person),geschwister(Onkel,Elternteil).
+onkel(Onkel,Person):- maennlich(Onkel),elternteil(Elternteil,Person),geschwister(Geschwisterchen,Elternteil),verheiratetA(Onkel, Geschwisterchen).
 
 % X ist Tante von Y :: tante(X,Y)
-tante(X,X):- !,fail.
-tante(Tante,Person):- vater(Vater,Person),bruder(Tante,Vater).
-tante(Tante,Person):- mutter(Mutter,Person),bruder(Tante,Mutter).
+tante(Tante,Person):- weiblich(Tante),elternteil(Elternteil,Person),geschwister(Tante,Elternteil).
+tante(Tante,Person):- weiblich(Tante),elternteil(Elternteil,Person),geschwister(Geschwisterchen,Elternteil),verheiratetA(Tante, Geschwisterchen).
 
 % X ist Cousin von Y :: cousin(X,Y)
-cousin(X,X):- !,fail.
-cousin(Cousin,Person):- (vater(X,Cousin);mutter(X,Cousin)),
-                        (vater(Y,Person);mutter(Y,Person)),
-                        (bruder(X,Y);schwester(X,Y);bruder(Y,X);schwester(Y,X)),
-                        maennlich(Cousin).
-                        
-                        
+cousin(Cousin,Person):- maennlich(Cousin),elternteil(Elternteil_C,Cousin),elternteil(Elternteil_P,Person),geschwister(Elternteil_C,Elternteil_P).
+
 % X ist Cousine von Y :: cousine(X,Y)
-cousine(X,X):- !,fail.
-cousine(Cousine,Person):- (vater(X,Cousine);mutter(X,Cousine)),
-                        (vater(Y,Person);mutter(Y,Person)),
-                        (bruder(X,Y);schwester(X,Y);bruder(Y,X);schwester(Y,X)),
-                        weiblich(Cousine).
+cousine(Cousine,Person):- weiblich(Cousine),elternteil(Elternteil_C,Cousine),elternteil(Elternteil_P,Person),geschwister(Elternteil_C,Elternteil_P).
+                        
 
-% X ist Schwager von Y :: schwager(X,Y)
-schwager(X,X):- !,fail.
-schwager(X,Y):- ehemann(X,Y),!,fail.
-schwager(X,Y):- schwester(G,Y), ehemann(X,G).
-schwager(X,Y):- ehemann(Yn,Y),bruder(X,Yn).
-schwager(X,Y):- ehemann(Yn,Y),schwester(G,Yn), ehemann(X,G).
+% Schwager ist Schwager von Person :: schwager(Schwager,Person)
+schwager(Schwager,Person):- maennlich(Schwager),geschwister(Person,Geschwisterchen),verheiratetA(Schwager,Geschwisterchen).
+schwager(Schwager,Person):- maennlich(Schwager),geschwister(Schwager,Geschwisterchen),verheiratetA(Person,Geschwisterchen).
+schwager(Schwager,Person):- maennlich(Schwager),verheiratetA(Schwager,Ehepartner),geschwister(Ehepartner,Geschwisterchen),verheiratetA(Person,Geschwisterchen).
 
 
-% X ist Schwaegerin von Y :: schwaegerin(X,Y)
-schwaegerin(X,X):- !,fail.
-schwaegerin(X,Y):- ehemann(Y,X),!,fail.
-schwaegerin(X,Y):- bruder(G,Y), ehemann(G,X).
-schwaegerin(X,Y):- ehemann(Yn,Y),schwester(G,Yn).
-schwaegerin(X,Y):- ehemann(Yn,Y),bruder(G,Yn),ehemann(G,X).
+% Schwaegerin ist Schwaegerin von Person :: schwaegerin(Schwaegerin,Person)
+schwaegerin(Schwaegerin,Person):- weiblich(Schwaegerin),geschwister(Person,Geschwisterchen),verheiratetA(Schwaegerin,Geschwisterchen).
+schwaegerin(Schwaegerin,Person):- weiblich(Schwaegerin),geschwister(Schwaegerin,Geschwisterchen),verheiratetA(Person,Geschwisterchen).
+schwaegerin(Schwaegerin,Person):- weiblich(Schwaegerin),verheiratetA(Schwaegerin,Ehepartner),geschwister(Ehepartner,Geschwisterchen),verheiratetA(Person,Geschwisterchen).
+
