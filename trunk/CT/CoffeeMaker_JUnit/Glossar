@@ -42,3 +42,53 @@ Dazu kann eine Simulation eingesetzt werden. Ziel dabei ist es:
 - Erfüllung nichtfunktionaler Anforderungen, wie z. B. geforderte Antwortzeiten sowie Mengenverarbeitungen, für den Produktivbetrieb nachzuweisen.
 - Die Dimensionierung der Hardwareausstattung zu überprüfen.
 (http://de.wikipedia.org/wiki/Lasttest_(Computer))
+
+Smoke-Test:
+
+Ein Smoke-Test ist der erster grundlegender Probelauf einer Software ohne Berücksichtigung der Details mit dem Ziel zur Erkennung von einfachen
+aber schwerwiegendeb Problemen. Sollte der Test fehlschlagen, so werden typischerweise auch auch die anderen Tests fehlschlagen.
+Diese brauchen vor Behebung der im Smoke-Test gefundenen Probleme gar nicht erst ausgeführt werden brauchen. Der Smoke-Test wird üblicherweise 
+vor anderen, aufwändigeren Tests ausgeführt dient damit einer Zeitersparnis, da grobe Probleme schnell entdeckt werden.
+Der Smoke-Test gehört in der Industrie zur Best Practice.
+(http://de.wikipedia.org/wiki/Smoke_testing)
+(http://stackoverflow.com/questions/4055736/what-is-a-smoke-test)
+(http://www.imbus.de/glossar/)
+
+Branch Coverage
+
+Das Branch Coverage gehört zur Familie der Kontrollflussorientierten Testverfahren. In diesem Test wird das Verhältnis zwischen abgelaufenen
+Entscheidungszweige und den existierenden Entscheidungszweigen ermittelt.
+Damit muss jede If-Anweisung sowohl einmal den Wert True als auch False annehmen. Da bei disem Test damit auch jede Anweisung ausgeführt wird,
+ist der Anweisungsüberdeckungstest eine Teilmenge des Branche Coverage. Der Mehrwert liegt u.a. in der Tatsache, dass z.B. auch nicht implementierte
+Entscheidungsalternativen abgeprüft werden müssen, um 100% Abdeckung zu erreichen (vgl. Quelle 3).
+
+Vorteile:
+- Deckt nicht erreichbare Zweige auf
+- Fehlerentdeckungsrate bei ca. 33%. Ein Fünftel davon sind Berechnungsfehler, der Rest sind Steuerflussfehler.
+
+Nachteile: 
+- Abhängigkeiten zwischen Bedingungen werden nicht berücksichtigt
+- Schleifen werden nur unzureichend getestet; siehe Pfadüberdeckungstest
+- komplexe Verzweigungsbedingungen werden nur schwach getestet
+(http://de.wikipedia.org/wiki/Kontrollflussorientierte_Testverfahren#C1._Zweig.C3.BCberdeckungstest_.28Branch_Coverage.29)
+(http://www.imbus.de/glossar/)
+(http://stackoverflow.com/questions/8229236/differences-between-line-and-branch-coverage)
+
+Condition Coverage
+
+Das Condition Coverage gehört zur Familie der Kontrollflussorientierten Testverfahren. In diesem Test wird das Verhältnis zwischen geprüfter atomater Faktoren in einer
+Entscheidung (if-Bedingung) existieren sowie den insgesammt existierenden Faktoren ermittelt.
+Dabei gibt es drei Varianten.
+
+Einfachbedingungsüberdeckungstest:
+Jede Entescheidung muss mindestens einmal zu True und mindestens einmal zum False evaluiert werden. 
+
+Mehrfachbedingungsüberdeckungstest:
+Für jeden atomaren Faktor muss einmal der True und einmal der False Wert angenommen werden. Short circuits sorgen dennoch dafür, dass mitunter
+Fehler (z.B. NullPointer) nicht entdeckt werden.
+
+minimaler Mehrfachbedingungsüberdeckungstest:
+Umfasst die Condition Coverage vollständig, aber weniger als der Mehrfachbedingungsüberdeckungstest.
+
+(http://de.wikipedia.org/wiki/Kontrollflussorientierte_Testverfahren#C1._Zweig.C3.BCberdeckungstest_.28Branch_Coverage.29)
+(http://swt.cs.tu-berlin.de/lehre/mwsp/ws0607/referate/Referat-8.pdf)
