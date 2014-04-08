@@ -11,7 +11,6 @@ import static org.junit.Assert.*;
  * User: Sven
  * Date: 25.03.14
  * Time: 14:41
- * To change this template use File | Settings | File Templates.
  */
 public class CoffeeMakerTestCorrected {
 
@@ -122,7 +121,7 @@ public class CoffeeMakerTestCorrected {
     @Test
     public void editRecipeNameSameAsBefore(){
         cm.addRecipe(r1);
-        String name = cm.editRecipe(0, r2);
+        cm.editRecipe(0, r2);
         Recipe editedRecipe = cm.getRecipes()[0];
         assertEquals(r1.getName(), editedRecipe.getName());
     }
@@ -130,7 +129,7 @@ public class CoffeeMakerTestCorrected {
     @Test
     public void editRecipeEdited(){
         cm.addRecipe(r1);
-        String name = cm.editRecipe(0, r2);
+        cm.editRecipe(0, r2);
 
         Recipe editedRecipe = cm.getRecipes()[0];
 
@@ -148,7 +147,7 @@ public class CoffeeMakerTestCorrected {
     }
 
 
-    @Test(expected = InventoryException.class)
+    @Test
     public void addInventoryAddNothing() throws Exception {
         cm.addInventory("0", "0", "0", "0");
     }
@@ -160,6 +159,11 @@ public class CoffeeMakerTestCorrected {
     public void addInventoryAddMilk() throws Exception {
         cm.addInventory("0","1","0","0");
     }
+
+    @Test(expected = InventoryException.class)
+    public void addInventoryAddNegativeMilk() throws Exception {
+        cm.addInventory("0","-1","0","0");
+    }
     @Test
     public void addInventoryAddPositiveSugar() throws Exception {
             cm.addInventory("0","0","1","0");
@@ -170,9 +174,18 @@ public class CoffeeMakerTestCorrected {
             cm.addInventory("0","0","-1","0");
     }
 
+    @Test(expected = InventoryException.class)
+    public void addInventoryAddNegativeCoffee() throws Exception {
+            cm.addInventory("-1","0","0","0");
+    }
+
     @Test
     public void addInventoryAddChocolate() throws Exception {
         cm.addInventory("0","0","0","1");
+    }
+    @Test(expected = InventoryException.class)
+    public void addInventoryAddNegativeChocolate() throws Exception {
+        cm.addInventory("0","0","0","-1");
     }
 
     @Test(expected = InventoryException.class)
