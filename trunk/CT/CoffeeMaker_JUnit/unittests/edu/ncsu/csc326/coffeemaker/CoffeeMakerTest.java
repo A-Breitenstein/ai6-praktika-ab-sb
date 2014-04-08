@@ -25,7 +25,7 @@ public class CoffeeMakerTest {
     public void setUp() throws Exception {
         cm = new CoffeeMaker();
 
-        //Set up for r1
+        // /Set up for r1
         r1 = new Recipe();
         r1.setName("Coffee");
         r1.setAmtChocolate("0");
@@ -74,7 +74,7 @@ public class CoffeeMakerTest {
     public void testAddRecipe() throws Exception {
         // recipe must be unique
         assertFalse(cm_recipe_test.addRecipe(r1));
-        // added only 3 recipes, so getRecipes must be 3
+        // added only 3 recipes, so getRecipes must be 4
         assertEquals(3, cm.getRecipes().length);
 
         // recipe1 price must be 50
@@ -85,6 +85,7 @@ public class CoffeeMakerTest {
         assertEquals(1 ,r1.getAmtSugar());
 
         // status message missing on adding recipes
+
 
     }
 
@@ -98,7 +99,7 @@ public class CoffeeMakerTest {
                 itemID = i;
         }
         assertEquals(r1.getName(), cm_recipe_test.deleteRecipe(itemID));
-        assertTrue(cm_recipe_test.deleteRecipe(itemID) == null);
+        assertEquals("",cm_recipe_test.deleteRecipe(itemID));
 
         // status message missing on deleting recipes
     }
