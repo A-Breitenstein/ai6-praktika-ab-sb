@@ -76,7 +76,6 @@ public class CoffeeMakerTest {
         assertFalse(cm_recipe_test.addRecipe(r1));
         // added only 3 recipes, so getRecipes must be 4
         assertEquals(3, cm.getRecipes().length);
-        assertTrue(true);
         // recipe1 price must be 50
         assertEquals(50,r1.getPrice());
         assertEquals(0 ,r1.getAmtChocolate());
