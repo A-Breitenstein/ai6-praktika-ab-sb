@@ -104,48 +104,100 @@ public class CoffeeMakerTest {
     }
 
     @Test
-    public void testEditRecipe() throws Exception {
+    public void editRecipeNameNotNull(){
         cm.addRecipe(r1);
         String name = cm.editRecipe(0, r2);
-
-        if (name == null) {
-            fail("Name should be the name of the edited recipe");
-        }
-
-        if (!name.equals(r1.getName())) {
-            fail("Name should equal the name of the edited recipe");
-        }
-
-        Recipe editedRecipe = cm.getRecipes()[0];
-
-        boolean recipeName = editedRecipe.getName().equals(r1.getName());
-
-        if (!recipeName) {
-            fail("Name of the Receipe is not the same as before");
-        }
-
-        boolean setAmtChocolate = editedRecipe.getAmtChocolate() == r2.getAmtChocolate();
-        boolean setAmtCoffee = editedRecipe.getAmtCoffee() == r2.getAmtChocolate();
-        boolean setAmtMilk = editedRecipe.getAmtMilk() == r2.getAmtMilk();
-        boolean setAmtSugar = editedRecipe.getAmtSugar() == r2.getAmtSugar();
-        boolean setPrice = editedRecipe.getPrice() == r2.getPrice();
-
-        if (!(setAmtChocolate && setAmtCoffee && setAmtMilk && setAmtSugar && setPrice)) {
-            fail("Recipe was not edited");
-        }
+        assertNotNull(name);
     }
 
     @Test
-    public void testAddInventory() throws Exception {
-        try {
-            cm.addInventory("4","7","2","9");
-        } catch (InventoryException e) {
-            fail("InventoryException should not be thrown");
-        }
-
+    public void editRecipeNameEqual(){
+        cm.addRecipe(r1);
+        String name = cm.editRecipe(0, r2);
+        assertEquals(r1.getName(),name);
     }
+
+    @Test
+    public void editRecipeNameSameAsBefore(){
+        cm.addRecipe(r1);
+        String name = cm.editRecipe(0, r2);
+        Recipe editedRecipe = cm.getRecipes()[0];
+        assertEquals(r1.getName(), editedRecipe.getName());
+    }
+
+    @Test
+    public void editRecipeEdited(){
+        cm.addRecipe(r1);
+        String name = cm.editRecipe(0, r2);
+
+        Recipe editedRecipe = cm.getRecipes()[0];
+
+        boolean setAmtChocolate = editedRecipe.getAmtChocolate() == r2.getAmtChocolate();
+        boolean setAmtCoffee    = editedRecipe.getAmtCoffee() == r2.getAmtCoffee();
+        boolean setAmtMilk      = editedRecipe.getAmtMilk() == r2.getAmtMilk();
+        boolean setAmtSugar     = editedRecipe.getAmtSugar() == r2.getAmtSugar();
+        boolean setPrice        = editedRecipe.getPrice() == r2.getPrice();
+
+        assertTrue(setAmtChocolate);
+        assertTrue(setAmtCoffee   );
+        assertTrue(setAmtMilk     );
+        assertTrue(setAmtSugar    );
+        assertTrue(setPrice       );
+    }
+
+
     @Test(expected = InventoryException.class)
-    public void testAddInventoryException() throws Exception{
+    public void addInventoryAddNothing() throws Exception {
+        cm.addInventory("0", "0", "0", "0");
+    }
+    @Test
+    public void addInventoryAddCoffee() throws Exception {
+        cm.addInventory("1","0","0","0");
+    }
+    @Test
+    public void addInventoryAddMilk() throws Exception {
+        cm.addInventory("0","1","0","0");
+    }
+    @Test
+    public void addInventoryAddPositiveSugar() throws Exception {
+            cm.addInventory("0","0","1","0");
+    }
+
+    @Test(expected = InventoryException.class)
+    public void addInventoryAddNegativeSugar() throws Exception {
+            cm.addInventory("0","0","-1","0");
+    }
+
+    @Test
+    public void addInventoryAddChocolate() throws Exception {
+        cm.addInventory("0","0","0","1");
+    }
+
+    @Test(expected = InventoryException.class)
+    public void addInventoryAddEmptyStrings() throws Exception {
+        cm.addInventory("","","","");
+    }
+
+    @Test(expected = InventoryException.class)
+    public void addInventoryAddNull() throws Exception {
+        cm.addInventory(null,null,null,null);
+    }
+
+    @Test
+    public void addInventoryAddMaxInt() throws Exception {
+        final int max_int = Integer.MAX_VALUE;
+        String str_int = String.valueOf(max_int);
+
+        cm.addInventory(str_int, str_int, str_int, str_int);
+    }
+
+    @Test(expected = InventoryException.class)
+    public void testAddInventoryCharacters() throws Exception {
+        cm.addInventory("a","b","c","d");
+    }
+
+    @Test(expected = InventoryException.class)
+    public void testAddInventoryExceptionQuatsch() throws Exception{
             cm.addInventory("4", "-1", "asdf", "3");
     }
 
