@@ -243,13 +243,12 @@ public class CoffeeMakerTestCorrected {
     }
     @Test
     public void testMakeCoffee1() throws Exception {
-        cm.addRecipe(r4);
-
-        assertEquals(0, cm.makeCoffee(3, 65));
-        assertEquals("Coffee: 15\n" +
-                "Milk: 14\n" +
+        Recipe[] a = cm.getRecipes();
+        assertEquals(0, cm.makeCoffee(2, 100));
+        assertEquals("Coffee: 12\n" +
+                "Milk: 12\n" +
                 "Sugar: 14\n" +
-                "Chocolate: 11\n", cm.checkInventory());
+                "Chocolate: 15\n", cm.checkInventory());
     }
 
     @Test
