@@ -138,7 +138,7 @@ public class CoffeeMakerTest {
     @Test
     public void testAddInventory() throws Exception {
         try {
-            cm.addInventory("4","7","0","9");
+            cm.addInventory("4","7","2","9");
         } catch (InventoryException e) {
             fail("InventoryException should not be thrown");
         }
@@ -151,14 +151,78 @@ public class CoffeeMakerTest {
 
     @Test
     public void testCheckInventory() throws Exception {
-
+        assertEquals("Coffee: 15\n" +
+                "Milk: 15\n" +
+                "Sugar: 15\n" +
+                "Chocolate: 15\n", cm.checkInventory());
+    }
+    @Test
+    public void testCheckInventoryAdd() throws Exception {
+        cm.addInventory("1","2","3","4");
+        assertEquals("Coffee: 16\n" +
+                "Milk: 17\n" +
+                "Sugar: 18\n" +
+                "Chocolate: 19\n", cm.checkInventory());
     }
 
     @Test
     public void testMakeCoffee() throws Exception {
         cm.addRecipe(r1);
-        assertEquals(25, cm.makeCoffee(0, 75));
+        assertEquals(Integer.MAX_VALUE-50, cm.makeCoffee(0, Integer.MAX_VALUE));
+        assertEquals("Coffee: 12\n" +
+                "Milk: 14\n" +
+                "Sugar: 14\n" +
+                "Chocolate: 15\n", cm.checkInventory());
     }
+    @Test
+    public void testMakeCoffee1() throws Exception {
+        cm.addRecipe(r4);
+
+        assertEquals(0, cm.makeCoffee(3, 65));
+        assertEquals("Coffee: 15\n" +
+                "Milk: 14\n" +
+                "Sugar: 14\n" +
+                "Chocolate: 11\n", cm.checkInventory());
+    }
+
+    @Test
+   public void testMakeCoffeeLessMoney() throws Exception {
+        cm.addRecipe(r1);
+        assertEquals(30, cm.makeCoffee(0, 30));
+        assertEquals("Coffee: 15\n" +
+                "Milk: 15\n" +
+                "Sugar: 15\n" +
+                "Chocolate: 15\n", cm.checkInventory());
+    }
+
+    @Test
+   public void testMakeCoffeeWrongMoney() throws Exception {
+        cm.addRecipe(r1);
+        assertEquals(-3, cm.makeCoffee(0, -3));
+        assertEquals("Coffee: 15\n" +
+                "Milk: 15\n" +
+                "Sugar: 15\n" +
+                "Chocolate: 15\n", cm.checkInventory());
+    }
+
+   @Test
+   public void TestMakeCoffeeLessInventory() throws Exception {
+        cm.addRecipe(r1);
+        cm.makeCoffee(0, 50);
+        cm.makeCoffee(0, 50);
+        cm.makeCoffee(0, 50);
+        cm.makeCoffee(0, 50);
+        cm.makeCoffee(0, 50);
+
+        assertEquals(50, cm.makeCoffee(0, 50));
+
+        assertEquals("Coffee: 0\n" +
+                "Milk: 10\n" +
+                "Sugar: 10\n" +
+                "Chocolate: 15\n", cm.checkInventory());
+    }
+
+
 
     @Test
     public void testGetRecipes() throws Exception {
