@@ -1,0 +1,11 @@
+34 ?- s(Semantik,Struktur,[ist,alex,die,tante,von,laura],[]).
+Semantik = tante(alex, laura),
+Struktur = s(v(ist), e(alex), np(a(die), n(tante)), pp(p(von), e(laura))).
+
+35 ?- s(Semantik,Struktur,[wer,ist,die,tante,von,laura],[]).
+Semantik = tante(_G776, laura),
+Struktur = s(ip(wer), vp(v(ist), np(a(die), n(tante))), pp(p(von), e(laura))) ;
+false.
+Noch ein Versuch da 2 s() Regeln vorhanden sind, durch grünen cut verhinderbar<<<
+
+Fehlend: Anbindung an Aufgabe 1 mit anschließenden aufruf der Semantik
