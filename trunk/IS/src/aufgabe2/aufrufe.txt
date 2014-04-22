@@ -9,3 +9,36 @@ false.
 Noch ein Versuch da 2 s() Regeln vorhanden sind, durch grünen cut verhinderbar<<<
 
 Fehlend: Anbindung an Aufgabe 1 mit anschließenden aufruf der Semantik
+
+joa fast richtig:
+23 ?- s(Semantik,Struktur,[wer,ist,die,tante,von,anna],[]),Semantik.
+Semantik = tante(alina, anna),
+Struktur = s(ip(wer), vp(v(ist), np(a(die), n(tante))), pp(p(von), e(anna))) ;
+Semantik = tante(alina, anna),
+Struktur = s(ip(wer), vp(v(ist), np(a(die), n(tante))), pp(p(von), e(anna))) ;
+Semantik = tante(alina, anna),
+Struktur = s(ip(wer), vp(v(ist), np(a(die), n(tante))), pp(p(von), e(anna))) ;
+Semantik = tante(alina, anna),
+Struktur = s(ip(wer), vp(v(ist), np(a(die), n(tante))), pp(p(von), e(anna))) ;
+Semantik = tante(charline, anna),
+Struktur = s(ip(wer), vp(v(ist), np(a(die), n(tante))), pp(p(von), e(anna))) ;
+Semantik = tante(charline, anna),
+Struktur = s(ip(wer), vp(v(ist), np(a(die), n(tante))), pp(p(von), e(anna))) ;
+Semantik = tante(charline, anna),
+Struktur = s(ip(wer), vp(v(ist), np(a(die), n(tante))), pp(p(von), e(anna))) ;
+Semantik = tante(charline, anna),
+Struktur = s(ip(wer), vp(v(ist), np(a(die), n(tante))), pp(p(von), e(anna))) ;
+false.
+
+24 ?- s(Semantik,Struktur,[ist,alina,die,tante,von,anna],[]),Semantik.
+Semantik = tante(alina, anna),
+Struktur = s(v(ist), e(alina), np(a(die), n(tante)), pp(p(von), e(anna))) ;
+Semantik = tante(alina, anna),
+Struktur = s(v(ist), e(alina), np(a(die), n(tante)), pp(p(von), e(anna))) ;
+Semantik = tante(alina, anna),
+Struktur = s(v(ist), e(alina), np(a(die), n(tante)), pp(p(von), e(anna))) ;
+Semantik = tante(alina, anna),
+Struktur = s(v(ist), e(alina), np(a(die), n(tante)), pp(p(von), e(anna))) ;
+false.
+
+irgendwas wird 4mal gebacktracked?!
