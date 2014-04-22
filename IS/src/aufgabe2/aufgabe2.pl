@@ -1,3 +1,5 @@
+:- include(aufgabe1).
+
 s(SemS, s(IP,VP,PP)) --> ip(SemIP,IP), vp(SemVP,VP), pp(SemVP,PP),
                          {SemVP = [_,SemIP,_], SemS =.. SemVP}.
 s(SemS, s(V,E1,NP,PP)) --> v(V), e(SemE1,E1), np(SemVP,NP), pp(SemVP,PP),
