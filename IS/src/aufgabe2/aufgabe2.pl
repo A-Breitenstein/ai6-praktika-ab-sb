@@ -21,6 +21,7 @@ lex(peter,peter,e).
 lex(ingeborg,ingeborg,e).
 lex(hans,hans,e).
 lex(alex,alex,e).
+lex(sven,sven,e).
 lex(sabine,sabine,e).
 lex(laura,laura,e).
 lex(alina,alina,e).
@@ -32,6 +33,20 @@ lex(christiane,christiane,e).
 lex(dorothea,dorothea,e).
 
 lex(tante,tante,n).
+lex(bruder,bruder,n).
+lex(vater,vater,n).
+lex(verheiratet,verheiratet,n).
+lex(geschwister,geschwister,n).
+lex(oma,oma,n).
+lex(opa,opa,n).
+lex(vorfahre,vorfahre,n).
+lex(schwester,schwester,n).
+lex(elternteil,elternteil,n).
+lex(onkel,onkel,n).
+lex(cousin,cousin,n).
+lex(cousine,cousine,n).
+lex(schwager,schwager,n).
+lex(schwaegerin,schwaegerin,n).
 
 lex(wer,Wer,ip).
 
@@ -41,4 +56,5 @@ lex(der,a).
 lex(die,a).
 
 lex(von,p).
+lex(mit,p).
 
