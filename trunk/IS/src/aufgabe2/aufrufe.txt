@@ -45,3 +45,8 @@ irgendwas wird 4mal gebacktracked?!
 
 nach dem erstenmal auswerten der Semantik, springt er wieder bei tante rein und backtracked.....
 das backtracking geschieht nur durch die anbindung an die wissensbasis bzw. aufgabe1
+
+4 ?- s(Semantik,Struktur,[ist,alex,verheiratet,mit,laura],[]),Semantik.
+Semantik = verheiratet(alex, laura),
+Struktur = s(v(ist), e(alex), np(n(verheiratet)), pp(p(mit), e(laura))) ;
+false.
