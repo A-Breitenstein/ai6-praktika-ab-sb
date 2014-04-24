@@ -4,57 +4,56 @@ s(SemS, s(IP,VP,PP)) --> ip(SemIP,IP), vp(SemVP,VP), pp(SemVP,PP),
                          {SemVP = [_,SemIP,_], SemS =.. SemVP}.
 s(SemS, s(V,E1,NP,PP)) --> v(V), e(SemE1,E1), np(SemVP,NP), pp(SemVP,PP),
                            {SemVP = [_,SemE1,_], SemS =.. SemVP}.
+
+
+a(SemA,a(SU1,V,PRAE,P,SU2)) --> {SemA =.. [PRAE,SU1,SU2]},subj(SU1),v(V),praedikat(PRAE),p(P),subj(SU2).
+
+praedikat(PRAE) --> art(A,AGR), n(PRAE,N,AGR).
+praedikat(PRAE) --> n(PRAE,N,_).
+
+subj(SU) --> [SU],{lex(SU,SU,e,_)}.
+
+
 vp([SemNP,_,_],vp(V,NP)) --> v(V), np([SemNP,_,_],NP).
-np([SemNP,_,_],np(N)) --> n(SemNP,N).
-np([SemNP,_,_],np(A, N)) --> a(A), n(SemNP,N).
+np([SemNP,_,_],np(N)) --> n(SemNP,N,AGR).
+np([SemNP,_,_],np(A, N)) --> art(A,AGR), n(SemNP,N,AGR).
 pp([_,_,SemE],pp(P, E2)) --> p(P), e(SemE,E2).
 
-ip(SemIP,ip(IP)) --> [IP], {lex(IP,SemIP,ip)}.
-a(a(A)) --> [A], {lex(A,a)}.
-n(SemN,n(N)) --> [N], {lex(N,SemN,n)}.
+ip(SemIP,ip(IP)) --> [IP], {lex(IP,SemIP,ip,_)}.
+art(art(A),AGR) --> [A], {lex(A,a,AGR)}.
+n(SemN,n(N),AGR) --> [N], {lex(N,SemN,n,AGR)}.
 p(p(P)) --> [P], {lex(P,p)}.
-e(SemE,e(E)) --> [E], {lex(E,SemE,e)}.
+e(SemE,e(E)) --> [E], {lex(E,SemE,e,_)}.
 v(v(V)) --> [V], {lex(V,v)}.
 
 
-lex(peter,peter,e).
-lex(ingeborg,ingeborg,e).
-lex(hans,hans,e).
-lex(alex,alex,e).
-lex(sven,sven,e).
-lex(sabine,sabine,e).
-lex(laura,laura,e).
-lex(alina,alina,e).
-lex(anna,anna,e).
-lex(berta,berta,e).
-lex(brigitte,brigitte,e).
-lex(charline,charline,e).
-lex(christiane,christiane,e).
-lex(dorothea,dorothea,e).
+lex(tante,tante,n,w).
+lex(bruder,bruder,n,m).
+lex(vater,vater,n,m).
+lex(verheiratet,verheiratet,n,_).
+lex(geschwister,geschwister,n,_).
+lex(oma,oma,n,w).
+lex(opa,opa,n,m).
+lex(vorfahre,vorfahre,n,m).
+lex(schwester,schwester,n,w).
+lex(elternteil,elternteil,n,m).
+lex(onkel,onkel,n,m).
+lex(cousin,cousin,n,m).
+lex(cousine,cousine,n,w).
+lex(schwager,schwager,n,m).
+lex(schwaegerin,schwaegerin,n,w).
+lex(W,W,T,G):- lex(W,T,G).
+lex(N,N,e,_).
 
-lex(tante,tante,n).
-lex(bruder,bruder,n).
-lex(vater,vater,n).
-lex(verheiratet,verheiratet,n).
-lex(geschwister,geschwister,n).
-lex(oma,oma,n).
-lex(opa,opa,n).
-lex(vorfahre,vorfahre,n).
-lex(schwester,schwester,n).
-lex(elternteil,elternteil,n).
-lex(onkel,onkel,n).
-lex(cousin,cousin,n).
-lex(cousine,cousine,n).
-lex(schwager,schwager,n).
-lex(schwaegerin,schwaegerin,n).
 
-lex(wer,Wer,ip).
+
+
+lex(wer,Wer,ip,_).
+
+lex(der,a,m).
+lex(die,a,w).
+lex(eine,a,w).
 
 lex(ist,v).
-
-lex(der,a).
-lex(die,a).
-
 lex(von,p).
-lex(mit,p).
 
