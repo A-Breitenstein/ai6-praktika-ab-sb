@@ -50,3 +50,8 @@ das backtracking geschieht nur durch die anbindung an die wissensbasis bzw. aufg
 Semantik = verheiratet(alex, laura),
 Struktur = s(v(ist), e(alex), np(n(verheiratet)), pp(p(mit), e(laura))) ;
 false.
+
+
+s(Semantik,Struktur,[wer,ist,elternteil,von,alex],[]),Semantik,a(Semantik,_,Antwort,[]).
+
+s(Semantik,_,[wer,ist,elternteil,von,alex],[]),Semantik,a(Semantik,_,Antwort,[]).
