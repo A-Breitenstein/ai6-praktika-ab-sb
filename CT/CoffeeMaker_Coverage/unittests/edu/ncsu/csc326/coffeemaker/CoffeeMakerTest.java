@@ -212,6 +212,9 @@ public class CoffeeMakerTest extends TestCase {
         cm.getRecipes();
     }
 
+    public void testRecipeToString() {
+        assertEquals(r1.toString(), "Coffee");
+    }
     public void testGetRecipeForNameNo() {
         cm.addRecipe(r1);
         assertTrue(cm.getRecipeForName("trololol").getName() == null);
