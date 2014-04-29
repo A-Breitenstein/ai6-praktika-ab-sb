@@ -1,5 +1,6 @@
 package edu.ncsu.csc326.coffeemaker;
 
+import junit.framework.AssertionFailedError;
 import junit.framework.TestCase;
 
 /**
@@ -193,6 +194,9 @@ public class CoffeeMakerTest extends TestCase {
         assertTrue(cm.editRecipe(r1, r1));
     }
 
+    public void testDeleteNull() {
+        assertFalse(cm.deleteRecipe(null));
+    }
     public void testDeleteRecipeDouble() {
         assertFalse(cm.deleteRecipe(r1));
     }
@@ -208,4 +212,9 @@ public class CoffeeMakerTest extends TestCase {
         cm.getRecipes();
     }
 
+    public void testGetRecipeForNameNo() {
+        Recipe recipe = new Recipe();
+        cm.addRecipe(r1);
+        assertTrue(cm.getRecipeForName("trololol").equals(recipe));
+    }
 }
