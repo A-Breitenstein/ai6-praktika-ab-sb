@@ -86,6 +86,34 @@ public class CoffeeMakerTest extends TestCase {
         assertTrue(cm.editRecipe(r1, r3));
         assertTrue(cm.editRecipe(r3, r1));
     }
+    public void testNegativeRecipeItems(){
+        Recipe r3 = new Recipe();
+        r3.setAmtChocolate(-1);
+        r3.setAmtCoffee(-1);
+        r3.setAmtMilk(-1);
+        r3.setAmtSugar(-1);
+        r3.setPrice(-1);
+
+        assertEquals(0, r3.getAmtChocolate());
+        assertEquals(0, r3.getAmtCoffee());
+        assertEquals(0, r3.getAmtMilk());
+        assertEquals(0, r3.getAmtSugar());
+        assertEquals(0, r3.getPrice());
+    }
+    public void testRecipeEquality(){
+        Recipe r1 = new Recipe();
+        Recipe r2 = new Recipe();
+        String recipeName = "Milk Coffee";
+
+        assertFalse(r1.equals(r2));
+        r2.setName(recipeName);
+        assertFalse(r1.equals(r2));
+        r1.setName(recipeName);
+
+        assertTrue(r1.equals(r2));
+        r2.setName("Coffee");
+        assertFalse(r1.equals(r2));
+    }
 
     public void testDeleteRecipe() {
         cm.deleteRecipe(r1);
