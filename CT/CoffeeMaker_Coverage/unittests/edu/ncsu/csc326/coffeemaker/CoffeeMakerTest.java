@@ -136,6 +136,15 @@ public class CoffeeMakerTest extends TestCase {
     public void testAddInventorfalsePositiveSugar() {
         assertTrue(cm.addInventory(0, 0, 1, 0));
     }
+    public void testAddInventorfalsePositiveMilk() {
+        assertFalse(cm.addInventory(0, -1, 0, 0));
+    }
+    public void testAddInventorfalsePositiveChoco() {
+        assertFalse(cm.addInventory(0, 0, 0, -1));
+    }
+    public void testAddInventorfalsePositiveCoffee() {
+        assertFalse(cm.addInventory(-1, 0, 0, 0));
+    }
 
     public void testEditRecipe(){
         Recipe r3 = new Recipe();
