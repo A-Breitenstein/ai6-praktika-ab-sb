@@ -213,8 +213,7 @@ public class CoffeeMakerTest extends TestCase {
     }
 
     public void testGetRecipeForNameNo() {
-        Recipe recipe = new Recipe();
         cm.addRecipe(r1);
-        assertTrue(cm.getRecipeForName("trololol").equals(recipe));
+        assertTrue(cm.getRecipeForName("trololol").getName() == null);
     }
 }
