@@ -28,7 +28,42 @@ public class CoffeeMakerTest extends TestCase {
 	}
 
     public void testEnoughIngredients(){
-        assertTrue(cm.makeCoffee(r1,50) == 0);
+        assertTrue(cm.makeCoffee(r1, 50) == 0);
+
+        Recipe recipe = new Recipe();
+        recipe.setName("Coffee");
+        recipe.setPrice(50);
+        recipe.setAmtCoffee(6);
+        recipe.setAmtMilk(1);
+        recipe.setAmtSugar(1);
+        recipe.setAmtChocolate(1);
+
+        Inventory inventory = new Inventory();
+
+        assertTrue(inventory.enoughIngredients(recipe));
+
+        inventory.setChocolate(0);
+        inventory.setCoffee(0);
+        inventory.setMilk(0);
+        inventory.setSugar(0);
+
+        assertFalse(inventory.enoughIngredients(recipe));
+
+    }
+
+    public void testInventory() {
+        Inventory inventory = new Inventory();
+
+        inventory.setChocolate(-5);
+        inventory.setCoffee(-5);
+        inventory.setMilk(-5);
+        inventory.setSugar(-5);
+
+        assertEquals(inventory.getChocolate(),0);
+        assertEquals(inventory.getCoffee(),0);
+        assertEquals(inventory.getMilk(),0);
+        assertEquals(inventory.getSugar(),0);
+
     }
     public void testGetRecipeForName() {
         assertEquals(r1.getName(),cm.getRecipeForName(r1.getName()));
@@ -63,4 +98,5 @@ public class CoffeeMakerTest extends TestCase {
     public void testGetRecipes() {
         cm.getRecipes();
     }
+
 }
