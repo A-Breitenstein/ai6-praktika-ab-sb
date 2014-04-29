@@ -66,7 +66,8 @@ public class CoffeeMakerTest extends TestCase {
 
     }
     public void testGetRecipeForName() {
-        assertEquals(r1.getName(),cm.getRecipeForName(r1.getName()));
+        cm.addRecipe(r1);
+        assertEquals(r1.getName(),cm.getRecipeForName(r1.getName()).getName());
     }
 
     public void testAddInventoryNothing() {
