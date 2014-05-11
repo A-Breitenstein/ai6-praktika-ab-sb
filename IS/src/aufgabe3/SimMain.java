@@ -60,7 +60,7 @@ public class SimMain {
                 gewonnen = !gewonnen;
                 System.out.println("Sie haben verloren, ERROS");
             } else {
-                String besteKanteFuerComputer = simuliere(5);
+                String besteKanteFuerComputer = simuliere(3);
                 graph.put(besteKanteFuerComputer, COMPUTER);
                 System.out.println("COM malt: "+besteKanteFuerComputer);
             }
@@ -87,7 +87,7 @@ public class SimMain {
     }
     private String simuliere(int tiefe) {
 
-        String bestEdge = "";
+        String[] bestEdge = new String[1];
 
         int bestEvaluation = Integer.MIN_VALUE;
         int val;
@@ -97,23 +97,9 @@ public class SimMain {
         alpha[0] = Integer.MIN_VALUE;
         beta[0] = Integer.MAX_VALUE;
 
-        List<String> openEdges = retrieveOpenEdges(graph);
-        Map<String,EdgeColor> newMapSituation;
+        maxAB(new HashMap<String, EdgeColor>(graph), alpha, beta, tiefe, bestEdge);
 
-        for (String openEdge : openEdges) {
-            newMapSituation = new HashMap<String, EdgeColor>(graph);
-            if (!pruefeAufDreieck(openEdge,graph,COMPUTER)) {
-                newMapSituation.put(openEdge, COMPUTER);
-                val = maxAB(newMapSituation, alpha, beta, tiefe);
-
-                if (val > bestEvaluation) {
-                    bestEvaluation = val;
-                    bestEdge = openEdge;
-                }
-            }
-        }
-
-        return bestEdge;
+        return bestEdge[0];
     }
 
     private List<String> retrieveOpenEdges(Map<String, EdgeColor> graph) {
@@ -127,7 +113,7 @@ public class SimMain {
         return openEdges;
     }
 
-    private int maxAB(Map<String, EdgeColor> g, int[] alpha, int[] beta, int tiefe) {
+    private int maxAB(Map<String, EdgeColor> g, int[] alpha, int[] beta, int tiefe, String[] bestEdge) {
         List<String> openEdges = retrieveOpenEdges(g);
         if (tiefe == 0 || openEdges.size() <= 1) {
             return evaluierSituation(g);
@@ -142,16 +128,20 @@ public class SimMain {
 
             newMapSituation = new HashMap<String, EdgeColor>(g);
 
-            if (!pruefeAufDreieck(openEdge, g, PLAYER)) {
+            if (!pruefeAufDreieck(openEdge, g, COMPUTER)) {
 
                 allEdgesDreiecks = false;
-                newMapSituation.put(openEdge, PLAYER);
+                newMapSituation.put(openEdge, COMPUTER);
                 if (best > alpha[0]) alpha[0] = best;
 
 
                 val = minAB(newMapSituation, alpha, beta, tiefe - 1);
 
-                if (val > best) best = val;
+
+                if (val > best) {
+                    best = val;
+                    bestEdge[0] = openEdge;
+                }
 
                 if (best >= beta[0]) return best;
             }
@@ -179,17 +169,19 @@ public class SimMain {
 
             newMapSituation = new HashMap<String, EdgeColor>(g);
 
-            if (!pruefeAufDreieck(openEdge, g, COMPUTER)) {
+            if (!pruefeAufDreieck(openEdge, g, PLAYER)) {
 
                 allEdgesDreiecks = false;
 
-                newMapSituation.put(openEdge, COMPUTER);
+                newMapSituation.put(openEdge, PLAYER);
                 if (best < beta[0]) beta[0] = best;
 
 
-                val = maxAB(newMapSituation, alpha, beta, tiefe - 1);
+                val = maxAB(newMapSituation, alpha, beta, tiefe - 1, new String[1]);
 
-                if (val < best) best = val;
+                if (val < best) {
+                    best = val;
+                }
 
                 if (alpha[0] >= best) return best;
             }
