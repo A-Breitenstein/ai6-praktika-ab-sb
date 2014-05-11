@@ -13,7 +13,7 @@ public class SimMain {
 
     Map<String, EdgeColor> graph = new HashMap<String, EdgeColor>();
     private boolean gewonnen = false;
-
+    SimGUI simGUI;
     enum EdgeColor{
         NONE,PLAYER,COMPUTER,VERLOREN
     }
@@ -35,6 +35,9 @@ public class SimMain {
         graph.put("46", NONE);
         graph.put("56", NONE);
         graph.put(VERLOREN.name(), NONE);
+
+        simGUI = new SimGUI();
+        simGUI.drawGraph(graph);
     }
 
     public void gameLoop() {
@@ -58,10 +61,26 @@ public class SimMain {
                 graph.put(besteKanteFuerComputer, COMPUTER);
             }
 
+            simGUI.drawGraph(graph);
+
+
         }
 
     }
 
+    /**
+     * nur zum testen damit der computer irgendwas anmalt.
+     * @return
+     */
+    private String chooseNONEColoredRandomEdge() {
+
+        for (Map.Entry<String, EdgeColor> stringEdgeColorEntry : graph.entrySet()) {
+            if(stringEdgeColorEntry.getValue().equals(NONE) && stringEdgeColorEntry.getKey().length() == 2)
+                return stringEdgeColorEntry.getKey();
+
+        }
+        return "12";
+    }
     private String simuliere(int tiefe) {
 
         for (Map.Entry<String, EdgeColor> stringEdgeColorEntry : graph.entrySet()) {
@@ -69,10 +88,12 @@ public class SimMain {
 
             }
         }
-        return null;
+
+
+        return chooseNONEColoredRandomEdge();
     }
     private int bewerteSpielSitutation(Map graph,EdgeColor fuerWenn) {
-
+        return 0;
     }
     private boolean pruefeAufDreieck(String kante) {
         int x, y;
