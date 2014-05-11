@@ -2,7 +2,9 @@ package aufgabe3;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import static aufgabe3.SimMain.EdgeColor.*;
@@ -52,13 +54,15 @@ public class SimMain {
                 System.out.println("Kante bereits gefärbt");continue;}
 
             graph.put(kante, PLAYER);
+            simGUI.drawGraph(graph);
 
-            if (kante.equals(VERLOREN.name())|| pruefeAufDreieck(kante)) {
+            if (kante.equals(VERLOREN.name())|| pruefeAufDreieck(kante,graph,PLAYER)) {
                 gewonnen = !gewonnen;
                 System.out.println("Sie haben verloren, ERROS");
             } else {
-                String besteKanteFuerComputer = simuliere(3);
+                String besteKanteFuerComputer = simuliere(5);
                 graph.put(besteKanteFuerComputer, COMPUTER);
+                System.out.println("COM malt: "+besteKanteFuerComputer);
             }
 
             simGUI.drawGraph(graph);
@@ -83,19 +87,144 @@ public class SimMain {
     }
     private String simuliere(int tiefe) {
 
-        for (Map.Entry<String, EdgeColor> stringEdgeColorEntry : graph.entrySet()) {
-            if (stringEdgeColorEntry.getValue().equals(NONE)) {
+        String bestEdge = "";
 
+        int bestEvaluation = Integer.MIN_VALUE;
+        int val;
+
+        int[] alpha = new int[1];
+        int[] beta = new int[1];
+        alpha[0] = Integer.MIN_VALUE;
+        beta[0] = Integer.MAX_VALUE;
+
+        List<String> openEdges = retrieveOpenEdges(graph);
+        Map<String,EdgeColor> newMapSituation;
+
+        for (String openEdge : openEdges) {
+            newMapSituation = new HashMap<String, EdgeColor>(graph);
+            if (!pruefeAufDreieck(openEdge,graph,COMPUTER)) {
+                newMapSituation.put(openEdge, COMPUTER);
+                val = maxAB(newMapSituation, alpha, beta, tiefe);
+
+                if (val > bestEvaluation) {
+                    bestEvaluation = val;
+                    bestEdge = openEdge;
+                }
             }
         }
 
+        return bestEdge;
+    }
 
-        return chooseNONEColoredRandomEdge();
+    private List<String> retrieveOpenEdges(Map<String, EdgeColor> graph) {
+
+        List<String> openEdges = new ArrayList<String>();
+
+        for (String key : graph.keySet()) {
+            if(graph.get(key).equals(EdgeColor.NONE) && !key.equals(VERLOREN.name())) openEdges.add(key);
+        }
+
+        return openEdges;
     }
-    private int bewerteSpielSitutation(Map graph,EdgeColor fuerWenn) {
-        return 0;
+
+    private int maxAB(Map<String, EdgeColor> g, int[] alpha, int[] beta, int tiefe) {
+        List<String> openEdges = retrieveOpenEdges(g);
+        if (tiefe == 0 || openEdges.size() <= 1) {
+            return evaluierSituation(g);
+        }
+
+        int best = Integer.MIN_VALUE;
+        int val;
+        boolean allEdgesDreiecks = true;
+
+        Map<String,EdgeColor> newMapSituation;
+        for (String openEdge : openEdges) {
+
+            newMapSituation = new HashMap<String, EdgeColor>(g);
+
+            if (!pruefeAufDreieck(openEdge, g, PLAYER)) {
+
+                allEdgesDreiecks = false;
+                newMapSituation.put(openEdge, PLAYER);
+                if (best > alpha[0]) alpha[0] = best;
+
+
+                val = minAB(newMapSituation, alpha, beta, tiefe - 1);
+
+                if (val > best) best = val;
+
+                if (best >= beta[0]) return best;
+            }
+        }
+
+        if (allEdgesDreiecks)
+            return evaluierSituation(g); //Fix für leaf, returned sonst best, weil alle sonstigen züge zum verlust führen
+
+        return best;
     }
-    private boolean pruefeAufDreieck(String kante) {
+
+    private int minAB(Map<String, EdgeColor> g, int[] alpha, int[] beta, int tiefe) {
+        List<String> openEdges = retrieveOpenEdges(g);
+        if (tiefe == 0 || openEdges.size() <= 1) {
+            return evaluierSituation(g);
+        }
+
+        int best = Integer.MAX_VALUE;
+        int val;
+        boolean allEdgesDreiecks = true;
+
+        Map<String,EdgeColor> newMapSituation;
+
+        for (String openEdge : openEdges) {
+
+            newMapSituation = new HashMap<String, EdgeColor>(g);
+
+            if (!pruefeAufDreieck(openEdge, g, COMPUTER)) {
+
+                allEdgesDreiecks = false;
+
+                newMapSituation.put(openEdge, COMPUTER);
+                if (best < beta[0]) beta[0] = best;
+
+
+                val = maxAB(newMapSituation, alpha, beta, tiefe - 1);
+
+                if (val < best) best = val;
+
+                if (alpha[0] >= best) return best;
+            }
+        }
+
+        if (allEdgesDreiecks)
+            return evaluierSituation(g); //Fix für leaf, returned sonst best, weil alle sonstigen züge zum verlust führen
+
+        return best;
+    }
+
+    private int getMoves(List<String> openEdges, Map<String, EdgeColor> g, EdgeColor edgeColor) {
+
+        int moves = 0;
+        for (String openEdge : openEdges) {
+            if (!pruefeAufDreieck(openEdge,g, edgeColor)) {
+                moves++;
+            }
+        }
+
+        return moves;
+    }
+
+    private int evaluierSituation(Map<String, EdgeColor> g) {
+        List<String> openEdges = retrieveOpenEdges(g);
+
+        int playerMoves = 0, comMoves = 0;
+        playerMoves = getMoves(openEdges, g, PLAYER);
+        comMoves = getMoves(openEdges, g, COMPUTER);
+
+        return comMoves - playerMoves;
+    }
+
+    
+    private boolean pruefeAufDreieck(String kante, Map<String,EdgeColor> g, EdgeColor edgeColor) {
         int x, y;
         x = Integer.parseInt(kante.substring(0, 1));
         y = Integer.parseInt(kante.substring(1, kante.length()));
@@ -103,11 +232,11 @@ public class SimMain {
         boolean esGibtEinDreieck =false;
         for (int i = 1; i < 7; i++) {
             if (!(i == x || i == y)) {
-                xi = graph.get(createKante(x,i));
-                yi = graph.get(createKante(y,i));
+                xi = g.get(createKante(x,i));
+                yi = g.get(createKante(y,i));
 
-                if ((esGibtEinDreieck = xi.equals(PLAYER) && yi.equals(PLAYER)) && esGibtEinDreieck) {
-                    System.out.println("ES GIBT EIN DREIECK LOL");
+                if ((esGibtEinDreieck = xi.equals(edgeColor) && yi.equals(edgeColor)) && esGibtEinDreieck) {
+//                    System.out.println("ES GIBT EIN DREIECK LOL");
                     break;
                 }
             }
