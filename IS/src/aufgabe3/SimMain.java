@@ -14,7 +14,7 @@ import static aufgabe3.SimMain.EdgeColor.*;
 public class SimMain {
 
     final int __DEPTH_END = 0;
-    final int __DEPTH_CALC = 3;
+    final int __DEPTH_CALC = 10;
     final int __MINIMUM_EDGES = 1;
     Map<String, EdgeColor> graph = new HashMap<String, EdgeColor>();
     private boolean gewonnen = false;
@@ -90,7 +90,7 @@ public class SimMain {
     }
     private String simuliere(int tiefe) {
 
-        String[] bestEdge = new String[1];
+        String bestEdge = "";
 
         int bestEvaluation = Integer.MIN_VALUE;
         int val;
@@ -100,19 +100,26 @@ public class SimMain {
         alpha[0] = Integer.MIN_VALUE;
         beta[0] = Integer.MAX_VALUE;
 
-        maxAB(new HashMap<String, EdgeColor>(graph), alpha, beta, tiefe, bestEdge);
+        Map<String,EdgeColor> newSituation;
+        for (String openEdge : retrieveOpenEdges(graph)) {
+            if (!pruefeAufDreieck(openEdge, graph, COMPUTER)) {
+                newSituation = new HashMap<String, EdgeColor>(graph);
+                newSituation.put(openEdge, COMPUTER);
 
-        //fixed durch openedges <= 1 statt 2
-        //fix, aber schlecht, sollte in die maxAB funktion
-//        if (bestEdge[0] == null) {
-//            for (String edge : retrieveOpenEdges(graph)) {
-//                if (!pruefeAufDreieck(edge, graph, COMPUTER)) {
-//                    bestEdge[0] = edge;
-//                }
-//            }
-//        }
+                val = minAB(newSituation, alpha, beta, tiefe);
 
-        return bestEdge[0];
+                System.out.println("Bewertung: " + openEdge + ", " + val);
+
+                if (val > bestEvaluation) {
+                    bestEvaluation = val;
+                    bestEdge = openEdge;
+                }
+            }
+        }
+
+
+
+        return bestEdge;
     }
 
     private List<String> retrieveOpenEdges(Map<String, EdgeColor> graph) {
@@ -126,7 +133,7 @@ public class SimMain {
         return openEdges;
     }
 
-    private int maxAB(Map<String, EdgeColor> g, int[] alpha, int[] beta, int tiefe, String[] bestEdge) {
+    private int maxAB(Map<String, EdgeColor> g, int[] alpha, int[] beta, int tiefe) {
         List<String> openEdges = retrieveOpenEdges(g);
         if (tiefe == __DEPTH_END || openEdges.size() <= __MINIMUM_EDGES) {
             return evaluierSituation(g);
@@ -150,12 +157,8 @@ public class SimMain {
 
                 val = minAB(newMapSituation, alpha, beta, tiefe - 1);
 
-                if(tiefe == __DEPTH_CALC)
-                    System.out.println("Tiefe(" + tiefe + "), Kante: " + openEdge + ", Bewertung: " + val);
-
                 if (val > best) {
                     best = val;
-                    bestEdge[0] = openEdge;
                 }
 
                 if (best >= beta[0]) return best;
@@ -192,10 +195,8 @@ public class SimMain {
                 if (best < beta[0]) beta[0] = best;
 
 
-                val = maxAB(newMapSituation, alpha, beta, tiefe - 1, new String[1]);
+                val = maxAB(newMapSituation, alpha, beta, tiefe - 1);
 
-                if(tiefe == __DEPTH_CALC-1)
-                    System.out.println("Tiefe(" + tiefe + "), Kante: " + openEdge + ", Bewertung: " + val);
 
                 if (val < best) {
                     best = val;
