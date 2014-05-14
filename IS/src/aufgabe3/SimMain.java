@@ -14,8 +14,8 @@ import static aufgabe3.SimMain.EdgeColor.*;
 public class SimMain {
 
     final int __DEPTH_END = 0;
-    final int __DEPTH_CALC = 5;
-    final int __MINIMUM_EDGES = 2;
+    final int __DEPTH_CALC = 15;
+    final int __MINIMUM_EDGES = 4;
     final EdgeColor __MINAB_SIDE = PLAYER;
     final EdgeColor __MAXAB_SIDE = COMPUTER;
     Map<String, EdgeColor> graph = new HashMap<String, EdgeColor>();
@@ -49,7 +49,6 @@ public class SimMain {
 
     public void gameLoop() {
 
-
         while (!gewonnen) {
             String kante = leseSpielerKante();
             EdgeColor color = graph.get(kante);
@@ -69,12 +68,8 @@ public class SimMain {
                 graph.put(besteKanteFuerComputer, COMPUTER);
                 System.out.println("COM malt: "+besteKanteFuerComputer);
             }
-
             simGUI.drawGraph(graph);
-
-
         }
-
     }
 
     /**
@@ -108,6 +103,7 @@ public class SimMain {
                 newSituation = new HashMap<String, EdgeColor>(graph);
                 newSituation.put(openEdge, COMPUTER);
 
+//                val = minAB(newSituation, alpha, beta, tiefe);
                 val = minAB(newSituation, alpha, beta, tiefe);
 
                 System.out.println("Bewertung: " + openEdge + ", " + val);
@@ -118,10 +114,17 @@ public class SimMain {
                 }
             }
         }
-
-
-
         return bestEdge;
+    }
+
+    private int getAmountOfAvailableEdges(Map<String, EdgeColor> graph) {
+        int accu = 0;
+
+        for (EdgeColor edgeColor : graph.values())
+            if (edgeColor.equals(NONE))
+                accu++;
+
+        return accu;
     }
 
     private List<String> retrieveOpenEdges(Map<String, EdgeColor> graph) {
@@ -138,7 +141,7 @@ public class SimMain {
     private int maxAB(Map<String, EdgeColor> g, int[] alpha, int[] beta, int tiefe) {
         List<String> openEdges = retrieveOpenEdges(g);
         if (tiefe == __DEPTH_END) {
-            return evaluierSituation(g);
+            return evaluierSituation(g, "min");
         }
 
         int best = Integer.MIN_VALUE;
@@ -168,7 +171,7 @@ public class SimMain {
         }
 
         if (allEdgesDreiecks)
-            return evaluierSituation(g); //Fix für leaf, returned sonst best, weil alle sonstigen züge zum verlust führen
+            return evaluierSituation(g, "min"); //Fix für leaf, returned sonst best, weil alle sonstigen züge zum verlust führen
 
         return best;
     }
@@ -176,7 +179,7 @@ public class SimMain {
     private int minAB(Map<String, EdgeColor> g, int[] alpha, int[] beta, int tiefe) {
         List<String> openEdges = retrieveOpenEdges(g);
         if (tiefe == __DEPTH_END) {
-            return evaluierSituation(g);
+            return evaluierSituation(g, "max");
         }
 
         int best = Integer.MAX_VALUE;
@@ -209,7 +212,7 @@ public class SimMain {
         }
 
         if (allEdgesDreiecks)
-            return evaluierSituation(g); //Fix für leaf, returned sonst best, weil alle sonstigen züge zum verlust führen
+            return evaluierSituation(g, "max"); //Fix für leaf, returned sonst best, weil alle sonstigen züge zum verlust führen
 
         return best;
     }
@@ -226,14 +229,17 @@ public class SimMain {
         return moves;
     }
 
-    private int evaluierSituation(Map<String, EdgeColor> g) {
+    private int evaluierSituation(Map<String, EdgeColor> g, String eval) {
         List<String> openEdges = retrieveOpenEdges(g);
 
         int playerMoves = 0, comMoves = 0;
         playerMoves = getMoves(openEdges, g, PLAYER);
         comMoves = getMoves(openEdges, g, COMPUTER);
 
-        return comMoves - playerMoves;
+        if (eval.equals("max"))
+            return comMoves - playerMoves;
+        else
+            return playerMoves - comMoves;
     }
 
     
