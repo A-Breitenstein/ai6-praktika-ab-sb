@@ -1,22 +1,105 @@
+--- neue bewertung
+Geben Sie Start und Endknoten einer schwarzen Kante ein "KnotenNummer;KnotenNummer":
+1;2
+Bewertung: 45, -3
+Bewertung: 56, -3
+Bewertung: 46, -3
+Bewertung: 35, -3
+Bewertung: 23, -3
+Bewertung: 36, -3
+Bewertung: 15, -3
+Bewertung: 24, -3
+Bewertung: 16, -3
+Bewertung: 25, -3
+Bewertung: 34, -3
+Bewertung: 13, -3
+Bewertung: 26, -3
+Bewertung: 14, -3
+COM malt: 45
+Geben Sie Start und Endknoten einer schwarzen Kante ein "KnotenNummer;KnotenNummer":
+2;6
+Bewertung: 56, 0
+Bewertung: 46, 0
+Bewertung: 35, 0
+Bewertung: 23, 0
+Bewertung: 36, 0
+Bewertung: 15, 0
+Bewertung: 24, 0
+Bewertung: 16, 0
+Bewertung: 25, 0
+Bewertung: 34, 0
+Bewertung: 13, 0
+Bewertung: 14, 0
+COM malt: 56
+Geben Sie Start und Endknoten einer schwarzen Kante ein "KnotenNummer;KnotenNummer":
+4;6
+Bewertung: 35, 0
+Bewertung: 23, 0
+Bewertung: 36, 0
+Bewertung: 15, 0
+Bewertung: 24, 0
+Bewertung: 16, 0
+Bewertung: 25, 1
+Bewertung: 34, 0
+Bewertung: 13, 0
+Bewertung: 14, 1
+COM malt: 25
+Geben Sie Start und Endknoten einer schwarzen Kante ein "KnotenNummer;KnotenNummer":
+1;4
+Bewertung: 35, 0
+Bewertung: 23, 2
+Bewertung: 36, 2
+Bewertung: 15, 1
+Bewertung: 16, 0
+Bewertung: 34, 1
+Bewertung: 13, 1
+COM malt: 23
+Geben Sie Start und Endknoten einer schwarzen Kante ein "KnotenNummer;KnotenNummer":
+1;3
+Bewertung: 36, 1
+Bewertung: 15, 1
+Bewertung: 16, 1
+Bewertung: 34, 0
+COM malt: 36
+Geben Sie Start und Endknoten einer schwarzen Kante ein "KnotenNummer;KnotenNummer":
+2;5
+Kante bereits gefärbt
+Geben Sie Start und Endknoten einer schwarzen Kante ein "KnotenNummer;KnotenNummer":
+1;5
+Bewertung: 16, 1
+Bewertung: 34, 1
+COM malt: 16
+Geben Sie Start und Endknoten einer schwarzen Kante ein "KnotenNummer;KnotenNummer":
+3;4
+Sie haben verloren, ERROS
+---
+1;2
+COM malt: 45
+2;6
+COM malt: 35
+4;6
+COM malt: 23
+1;4
+COM malt: 56
+1;3
+COM malt: 15
+3;6
+COM malt: 24
+2;5
+COM malt:
 --- tiefe 5
 1;2
 COM malt: 45
-
 2;6
 COM malt: 36
-
 4;6
 COM malt: 56
-
 1;4
 COM malt: 23
-
 1;3
 COM malt: 15
-
 2;5
 COM malt: 24
-
 3;5
 COM malt:
 --- tiefe 10
@@ -37,95 +120,33 @@ COM malt:
 
 --- tiefe 10
 1;2
-Bewertung: 45, -3
-Bewertung: 56, -3
-Bewertung: 46, -3
-Bewertung: 35, -3
-Bewertung: 23, -3
-Bewertung: 36, -3
-Bewertung: 15, -3
-Bewertung: 24, -3
-Bewertung: 16, -2
-Bewertung: 25, -3
-Bewertung: 34, -3
-Bewertung: 13, -2
-Bewertung: 26, -3
-Bewertung: 14, -2
 COM malt: 16
-Geben Sie Start und Endknoten einer schwarzen Kante ein "KnotenNummer;KnotenNummer":
 2;6
-Bewertung: 45, 0
-Bewertung: 56, 0
-Bewertung: 46, 0
-Bewertung: 35, 0
-Bewertung: 23, 0
-Bewertung: 36, -1
-Bewertung: 15, 0
-Bewertung: 24, 0
-Bewertung: 25, -1
-Bewertung: 34, 0
-Bewertung: 13, 0
-Bewertung: 14, 0
 COM malt: 45
-Geben Sie Start und Endknoten einer schwarzen Kante ein "KnotenNummer;KnotenNummer":
 4;6
-Bewertung: 56, 0
-Bewertung: 35, 0
-Bewertung: 23, 0
-Bewertung: 36, 0
-Bewertung: 15, 0
-Bewertung: 24, 0
-Bewertung: 25, 0
-Bewertung: 34, 0
-Bewertung: 13, 0
-Bewertung: 14, 0
 COM malt: 56
-Geben Sie Start und Endknoten einer schwarzen Kante ein "KnotenNummer;KnotenNummer":
 1;4
-Bewertung: 35, 0
-Bewertung: 23, 0
-Bewertung: 36, 0
-Bewertung: 24, 0
-Bewertung: 25, 0
-Bewertung: 34, 0
-Bewertung: 13, 0
 COM malt: 35
-Geben Sie Start und Endknoten einer schwarzen Kante ein "KnotenNummer;KnotenNummer":
 1;3
-Bewertung: 23, 0
-Bewertung: 24, 0
-Bewertung: 25, -1
 COM malt: 23
-Geben Sie Start und Endknoten einer schwarzen Kante ein "KnotenNummer;KnotenNummer":
 1;5
-Bewertung: 24, 0
 COM malt: 24
-Geben Sie Start und Endknoten einer schwarzen Kante ein "KnotenNummer;KnotenNummer":
 3;6
 COM malt:
-Geben Sie Start und Endknoten einer schwarzen Kante ein "KnotenNummer;KnotenNummer":
-neuste version
 
 ---tiefe 3  bei tiefe 10 malt COM anders
 3;6
 COM malt: 23
-
 1;2
 COM malt: 13
-
 4;5
-
 COM malt: 56
-
 3;4
 COM malt: 46
-
 2;4
 COM malt: 35
-
 1;5
 COM malt: 16
-
 2;6
 COM malt: x
 
