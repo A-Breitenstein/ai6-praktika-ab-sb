@@ -14,8 +14,8 @@ import static aufgabe3.SimMain.EdgeColor.*;
 public class SimMain {
 
     final int __DEPTH_END = 0;
-    final int __DEPTH_CALC = 15;
-    final int __MINIMUM_EDGES = 4;
+    final int __DEPTH_CALC = 10;
+    final int __MINIMUM_EDGES = 5;
     final EdgeColor __MINAB_SIDE = PLAYER;
     final EdgeColor __MAXAB_SIDE = COMPUTER;
     Map<String, EdgeColor> graph = new HashMap<String, EdgeColor>();
@@ -140,7 +140,7 @@ public class SimMain {
 
     private int maxAB(Map<String, EdgeColor> g, int[] alpha, int[] beta, int tiefe) {
         List<String> openEdges = retrieveOpenEdges(g);
-        if (tiefe == __DEPTH_END) {
+        if (tiefe == __DEPTH_END || openEdges.size() <= __MINIMUM_EDGES) {
             return evaluierSituation(g, "min");
         }
 
@@ -178,7 +178,7 @@ public class SimMain {
 
     private int minAB(Map<String, EdgeColor> g, int[] alpha, int[] beta, int tiefe) {
         List<String> openEdges = retrieveOpenEdges(g);
-        if (tiefe == __DEPTH_END) {
+        if (tiefe == __DEPTH_END || openEdges.size() <= __MINIMUM_EDGES) {
             return evaluierSituation(g, "max");
         }
 
