@@ -108,7 +108,7 @@ public class SimMain {
 
                 System.out.println("Bewertung: " + openEdge + ", " + val);
 
-                if (val > bestEvaluation) {
+                if (val >= bestEvaluation) {
                     bestEvaluation = val;
                     bestEdge = openEdge;
                 }
