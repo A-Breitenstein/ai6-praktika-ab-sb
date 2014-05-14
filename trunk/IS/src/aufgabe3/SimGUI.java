@@ -25,29 +25,10 @@ public class SimGUI extends JFrame {
 
     Map<String, SimMain.EdgeColor> graph = new HashMap<String, SimMain.EdgeColor>();
 
-
     public SimGUI() {
         setSize(640, 480);
         setName("SimGUI");
         setVisible(true);
-
-//        graph.put("12", NONE);
-//        graph.put("13", NONE);
-//        graph.put("14", NONE);
-//        graph.put("15", NONE);
-//        graph.put("16", NONE);
-//        graph.put("23", NONE);
-//        graph.put("24", PLAYER);
-//        graph.put("25", PLAYER);
-//        graph.put("26", NONE);
-//        graph.put("34", NONE);
-//        graph.put("35", NONE);
-//        graph.put("36", NONE);
-//        graph.put("45", COMPUTER);
-//        graph.put("46", COMPUTER);
-//        graph.put("56", NONE);
-//        graph.put(VERLOREN.name(), NONE);
-
     }
 
     @Override
@@ -86,10 +67,6 @@ public class SimGUI extends JFrame {
                 renderer.drawString("" + (i + 1), points[i][0] + 5, points[i][1] + 18);
             }
         }
-
-
-
-
     }
 
     public void drawGraph(Map<String, SimMain.EdgeColor> graph) {

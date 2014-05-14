@@ -14,8 +14,10 @@ import static aufgabe3.SimMain.EdgeColor.*;
 public class SimMain {
 
     final int __DEPTH_END = 0;
-    final int __DEPTH_CALC = 10;
-    final int __MINIMUM_EDGES = 1;
+    final int __DEPTH_CALC = 5;
+    final int __MINIMUM_EDGES = 2;
+    final EdgeColor __MINAB_SIDE = PLAYER;
+    final EdgeColor __MAXAB_SIDE = COMPUTER;
     Map<String, EdgeColor> graph = new HashMap<String, EdgeColor>();
     private boolean gewonnen = false;
     SimGUI simGUI;
@@ -135,7 +137,7 @@ public class SimMain {
 
     private int maxAB(Map<String, EdgeColor> g, int[] alpha, int[] beta, int tiefe) {
         List<String> openEdges = retrieveOpenEdges(g);
-        if (tiefe == __DEPTH_END || openEdges.size() <= __MINIMUM_EDGES) {
+        if (tiefe == __DEPTH_END) {
             return evaluierSituation(g);
         }
 
@@ -148,10 +150,10 @@ public class SimMain {
 
             newMapSituation = new HashMap<String, EdgeColor>(g);
 
-            if (!pruefeAufDreieck(openEdge, g, COMPUTER)) {
+            if (!pruefeAufDreieck(openEdge, g, __MAXAB_SIDE)) {
 
                 allEdgesDreiecks = false;
-                newMapSituation.put(openEdge, COMPUTER);
+                newMapSituation.put(openEdge, __MAXAB_SIDE);
                 if (best > alpha[0]) alpha[0] = best;
 
 
@@ -173,7 +175,7 @@ public class SimMain {
 
     private int minAB(Map<String, EdgeColor> g, int[] alpha, int[] beta, int tiefe) {
         List<String> openEdges = retrieveOpenEdges(g);
-        if (tiefe == __DEPTH_END || openEdges.size() <= __MINIMUM_EDGES) {
+        if (tiefe == __DEPTH_END) {
             return evaluierSituation(g);
         }
 
@@ -187,11 +189,11 @@ public class SimMain {
 
             newMapSituation = new HashMap<String, EdgeColor>(g);
 
-            if (!pruefeAufDreieck(openEdge, g, PLAYER)) {
+            if (!pruefeAufDreieck(openEdge, g, __MINAB_SIDE)) {
 
                 allEdgesDreiecks = false;
 
-                newMapSituation.put(openEdge, PLAYER);
+                newMapSituation.put(openEdge, __MINAB_SIDE);
                 if (best < beta[0]) beta[0] = best;
 
 
