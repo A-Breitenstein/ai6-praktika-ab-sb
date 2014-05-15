@@ -15,7 +15,7 @@ public class SimMain {
 
     final int __DEPTH_END = 0;
     final int __DEPTH_CALC = 10;
-    final int __MINIMUM_EDGES = 5;
+    final int __MINIMUM_EDGES = 4;
     final EdgeColor __MINAB_SIDE = PLAYER;
     final EdgeColor __MAXAB_SIDE = COMPUTER;
     Map<String, EdgeColor> graph = new HashMap<String, EdgeColor>();
@@ -103,7 +103,6 @@ public class SimMain {
                 newSituation = new HashMap<String, EdgeColor>(graph);
                 newSituation.put(openEdge, COMPUTER);
 
-//                val = minAB(newSituation, alpha, beta, tiefe);
                 val = minAB(newSituation, alpha, beta, tiefe);
 
                 System.out.println("Bewertung: " + openEdge + ", " + val);
@@ -159,7 +158,6 @@ public class SimMain {
                 newMapSituation.put(openEdge, __MAXAB_SIDE);
                 if (best > alpha[0]) alpha[0] = best;
 
-
                 val = minAB(newMapSituation, alpha, beta, tiefe - 1);
 
                 if (val > best) {
@@ -199,9 +197,7 @@ public class SimMain {
                 newMapSituation.put(openEdge, __MINAB_SIDE);
                 if (best < beta[0]) beta[0] = best;
 
-
                 val = maxAB(newMapSituation, alpha, beta, tiefe - 1);
-
 
                 if (val < best) {
                     best = val;
@@ -236,10 +232,7 @@ public class SimMain {
         playerMoves = getMoves(openEdges, g, PLAYER);
         comMoves = getMoves(openEdges, g, COMPUTER);
 
-        if (eval.equals("max"))
-            return comMoves - playerMoves;
-        else
-            return playerMoves - comMoves;
+        return comMoves - playerMoves;
     }
 
     
