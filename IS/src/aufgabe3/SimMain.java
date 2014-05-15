@@ -15,7 +15,7 @@ public class SimMain {
 
     final int __DEPTH_END = 0;
     final int __DEPTH_CALC = 10;
-    final int __MINIMUM_EDGES = 4;
+    final int __MINIMUM_EDGES = 3;
     final EdgeColor __MINAB_SIDE = PLAYER;
     final EdgeColor __MAXAB_SIDE = COMPUTER;
     Map<String, EdgeColor> graph = new HashMap<String, EdgeColor>();
@@ -131,7 +131,8 @@ public class SimMain {
         List<String> openEdges = new ArrayList<String>();
 
         for (String key : graph.keySet()) {
-            if(graph.get(key).equals(EdgeColor.NONE) && !key.equals(VERLOREN.name())) openEdges.add(key);
+            if(graph.get(key).equals(EdgeColor.NONE) && !key.equals(VERLOREN.name()))
+                openEdges.add(key);
         }
 
         return openEdges;
@@ -229,10 +230,11 @@ public class SimMain {
         List<String> openEdges = retrieveOpenEdges(g);
 
         int playerMoves = 0, comMoves = 0;
-        playerMoves = getMoves(openEdges, g, PLAYER);
+//        playerMoves = getMoves(openEdges, g, PLAYER);
         comMoves = getMoves(openEdges, g, COMPUTER);
 
-        return comMoves - playerMoves;
+//        return comMoves - playerMoves;
+        return comMoves - openEdges.size();
     }
 
     
