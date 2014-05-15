@@ -1,3 +1,74 @@
+Geben Sie Start und Endknoten einer schwarzen Kante ein "KnotenNummer;KnotenNummer":
+1;2
+Bewertung: 45, 0
+Bewertung: 56, 0
+Bewertung: 46, 0
+Bewertung: 35, 0
+Bewertung: 23, 0
+Bewertung: 36, 0
+Bewertung: 15, 0
+Bewertung: 24, 0
+Bewertung: 16, 0
+Bewertung: 25, 0
+Bewertung: 34, 0
+Bewertung: 13, 0
+Bewertung: 26, 0
+Bewertung: 14, 0
+COM malt: 14
+Geben Sie Start und Endknoten einer schwarzen Kante ein "KnotenNummer;KnotenNummer":
+2;4
+Bewertung: 45, 2
+Bewertung: 56, 2
+Bewertung: 46, 2
+Bewertung: 35, 2
+Bewertung: 23, 2
+Bewertung: 36, 2
+Bewertung: 15, 2
+Bewertung: 16, 2
+Bewertung: 25, 2
+Bewertung: 34, 2
+Bewertung: 13, 2
+Bewertung: 26, 2
+COM malt: 26
+Geben Sie Start und Endknoten einer schwarzen Kante ein "KnotenNummer;KnotenNummer":
+3;5
+Bewertung: 45, 2
+Bewertung: 56, 0
+Bewertung: 46, 2
+Bewertung: 23, 2
+Bewertung: 36, 1
+Bewertung: 15, 2
+Bewertung: 16, 1
+Bewertung: 25, 2
+Bewertung: 34, 1
+Bewertung: 13, 1
+COM malt: 25
+Geben Sie Start und Endknoten einer schwarzen Kante ein "KnotenNummer;KnotenNummer":
+4;6
+Bewertung: 45, 2
+Bewertung: 23, 2
+Bewertung: 36, 1
+Bewertung: 15, 2
+Bewertung: 16, 2
+Bewertung: 34, 1
+Bewertung: 13, 1
+COM malt: 16
+Geben Sie Start und Endknoten einer schwarzen Kante ein "KnotenNummer;KnotenNummer":
+3;6
+Bewertung: 45, 0
+Bewertung: 23, 2
+Bewertung: 15, 2
+Bewertung: 34, 1
+Bewertung: 13, 1
+COM malt: 15
+Geben Sie Start und Endknoten einer schwarzen Kante ein "KnotenNummer;KnotenNummer":
+2;3
+Bewertung: 34, 0
+Bewertung: 13, 0
+COM malt: 13
+Geben Sie Start und Endknoten einer schwarzen Kante ein "KnotenNummer;KnotenNummer":
+4;5
+COM malt:
 --- noch keine aktuelle folge gefunden seit änderung auf minEdges = 3 und änderung der Bewertungsfunktion
 1;2
 COM malt: 14

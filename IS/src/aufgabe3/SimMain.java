@@ -234,7 +234,7 @@ public class SimMain {
         comMoves = getMoves(openEdges, g, COMPUTER);
 
 //        return comMoves - playerMoves;
-        return comMoves - openEdges.size();
+        return comMoves;// - openEdges.size();
     }
 
     
