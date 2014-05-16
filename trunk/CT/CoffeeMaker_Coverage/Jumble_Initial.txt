@@ -1,0 +1,77 @@
+Mutating edu.ncsu.csc326.coffeemaker.CoffeeMaker
+Tests: edu.ncsu.csc326.coffeemaker.CoffeeMakerTest
+Mutation points = 81, unit test time limit 2.05s
+M FAIL: edu.ncsu.csc326.coffeemaker.CoffeeMaker:12: 4 -> 5
+M FAIL: edu.ncsu.csc326.coffeemaker.CoffeeMaker:23: 4 -> 5
+M FAIL: edu.ncsu.csc326.coffeemaker.CoffeeMaker:24: 4 -> 5
+......M FAIL: edu.ncsu.csc326.coffeemaker.CoffeeMaker:42: 0 -> 1
+.M FAIL: edu.ncsu.csc326.coffeemaker.CoffeeMaker:44: 0 -> 1
+..M FAIL: edu.ncsu.csc326.coffeemaker.CoffeeMaker:42: negated conditional
+M FAIL: edu.ncsu.csc326.coffeemaker.CoffeeMaker:49: negated conditional
+M FAIL: edu.ncsu.csc326.coffeemaker.CoffeeMaker:50: -1 -> 1
+M FAIL: edu.ncsu.csc326.coffeemaker.CoffeeMaker:51: 0 -> 1
+.....M FAIL: edu.ncsu.csc326.coffeemaker.CoffeeMaker:57: -1 -> 1
+.M FAIL: edu.ncsu.csc326.coffeemaker.CoffeeMaker:59: 1 -> 0
+M FAIL: edu.ncsu.csc326.coffeemaker.CoffeeMaker:62: 0 -> 1
+.M FAIL: edu.ncsu.csc326.coffeemaker.CoffeeMaker:75: 0 -> 1
+M FAIL: edu.ncsu.csc326.coffeemaker.CoffeeMaker:76: negated conditional
+M FAIL: edu.ncsu.csc326.coffeemaker.CoffeeMaker:77: 0 -> 1
+M FAIL: edu.ncsu.csc326.coffeemaker.CoffeeMaker:78: negated conditional
+M FAIL: edu.ncsu.csc326.coffeemaker.CoffeeMaker:80: 1 -> 0
+M FAIL: edu.ncsu.csc326.coffeemaker.CoffeeMaker:77: += -> -=
+M FAIL: edu.ncsu.csc326.coffeemaker.CoffeeMaker:77: 4 -> 5
+M FAIL: edu.ncsu.csc326.coffeemaker.CoffeeMaker:77: negated conditional
+.M FAIL: edu.ncsu.csc326.coffeemaker.CoffeeMaker:94: 0 -> 1
+M FAIL: edu.ncsu.csc326.coffeemaker.CoffeeMaker:95: 0 -> 1
+M FAIL: edu.ncsu.csc326.coffeemaker.CoffeeMaker:96: negated conditional
+M FAIL: edu.ncsu.csc326.coffeemaker.CoffeeMaker:97: negated conditional
+M FAIL: edu.ncsu.csc326.coffeemaker.CoffeeMaker:99: negated conditional
+M FAIL: edu.ncsu.csc326.coffeemaker.CoffeeMaker:100: 1 -> 0
+M FAIL: edu.ncsu.csc326.coffeemaker.CoffeeMaker:102: 0 -> 1
+M FAIL: edu.ncsu.csc326.coffeemaker.CoffeeMaker:95: += -> -=
+M FAIL: edu.ncsu.csc326.coffeemaker.CoffeeMaker:95: 4 -> 5
+M FAIL: edu.ncsu.csc326.coffeemaker.CoffeeMaker:95: negated conditional
+.M FAIL: edu.ncsu.csc326.coffeemaker.CoffeeMaker:119: 1 -> 0
+M FAIL: edu.ncsu.csc326.coffeemaker.CoffeeMaker:120: negated conditional
+M FAIL: edu.ncsu.csc326.coffeemaker.CoffeeMaker:120: negated conditional
+M FAIL: edu.ncsu.csc326.coffeemaker.CoffeeMaker:120: negated conditional
+M FAIL: edu.ncsu.csc326.coffeemaker.CoffeeMaker:120: negated conditional
+M FAIL: edu.ncsu.csc326.coffeemaker.CoffeeMaker:121: 0 -> 1
+M FAIL: edu.ncsu.csc326.coffeemaker.CoffeeMaker:124: + -> -
+M FAIL: edu.ncsu.csc326.coffeemaker.CoffeeMaker:125: + -> -
+M FAIL: edu.ncsu.csc326.coffeemaker.CoffeeMaker:126: + -> -
+M FAIL: edu.ncsu.csc326.coffeemaker.CoffeeMaker:127: + -> -
+..M FAIL: edu.ncsu.csc326.coffeemaker.CoffeeMaker:148: 1 -> 0
+M FAIL: edu.ncsu.csc326.coffeemaker.CoffeeMaker:149: negated conditional
+M FAIL: edu.ncsu.csc326.coffeemaker.CoffeeMaker:150: 0 -> 1
+M FAIL: edu.ncsu.csc326.coffeemaker.CoffeeMaker:152: negated conditional
+M FAIL: edu.ncsu.csc326.coffeemaker.CoffeeMaker:153: 0 -> 1
+M FAIL: edu.ncsu.csc326.coffeemaker.CoffeeMaker:155: negated conditional
+M FAIL: edu.ncsu.csc326.coffeemaker.CoffeeMaker:156: + -> -
+M FAIL: edu.ncsu.csc326.coffeemaker.CoffeeMaker:157: - -> +
+M FAIL: edu.ncsu.csc326.coffeemaker.CoffeeMaker:158: - -> +
+M FAIL: edu.ncsu.csc326.coffeemaker.CoffeeMaker:159: - -> +
+M FAIL: edu.ncsu.csc326.coffeemaker.CoffeeMaker:160: - -> +
+...M FAIL: edu.ncsu.csc326.coffeemaker.CoffeeMaker:182: 0 -> 1
+M FAIL: edu.ncsu.csc326.coffeemaker.CoffeeMaker:183: negated conditional
+M FAIL: edu.ncsu.csc326.coffeemaker.CoffeeMaker:184: negated conditional
+M FAIL: edu.ncsu.csc326.coffeemaker.CoffeeMaker:182: += -> -=
+M FAIL: edu.ncsu.csc326.coffeemaker.CoffeeMaker:182: 4 -> 5
+M FAIL: edu.ncsu.csc326.coffeemaker.CoffeeMaker:182: negated conditional
+.
+Score: 29%
+
+
+=================================================
+
+Mutating edu.ncsu.csc326.coffeemaker.Inventory
+Tests: edu.ncsu.csc326.coffeemaker.InventoryTest
+Score: 0% (NO TEST CLASS)
+Mutation points = 32
+
+=================================================
+
+Mutating edu.ncsu.csc326.coffeemaker.Recipe
+Tests: edu.ncsu.csc326.coffeemaker.RecipeTest
+Score: 0% (NO TEST CLASS)
+Mutation points = 28
