@@ -140,7 +140,7 @@ public class Wahrheitstabelle {
      * @return true if correct initialized
      */
     public boolean __checkErgebnisvektor() {
-        if (ergebnisVektor == null || ergebnisVektor.length == 0) throw new IllegalStateException(__EXCEPTION_Ergebnisvektorinitialisierung);
+        if ( ergebnisVektor == null || ergebnisVektor.length == 0 ||Math.pow(2,parameterAnzahl) != ergebnisVektor.length) throw new IllegalStateException(__EXCEPTION_Ergebnisvektorinitialisierung);
         return true;
     }
 }
