@@ -6,8 +6,7 @@
 public class MMTestcaseGenerator {
     public static void main(String[] args) {
         int[] ergebnisvektor = new int[]{1, 0, 0, 0, 1, 0, 1, 0};
-        int parameterAnzahl = 3;
-        Wahrheitstabelle t = Wahrheitstabelle.create(ergebnisvektor, parameterAnzahl);
+        Wahrheitstabelle t = Wahrheitstabelle.create(ergebnisvektor);
 
         t.evaluateTestcases();
         System.out.println(t);
