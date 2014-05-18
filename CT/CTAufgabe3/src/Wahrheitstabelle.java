@@ -136,7 +136,14 @@ public class Wahrheitstabelle {
      * @return true if correct initialized
      */
     public boolean __checkErgebnisvektor() {
-        if ( ergebnisVektor == null || ergebnisVektor.length == 0 ||Math.pow(2,parameterAnzahl) != ergebnisVektor.length) throw new IllegalStateException(__EXCEPTION_Ergebnisvektorinitialisierung);
+        if ( ergebnisVektor == null || ergebnisVektor.length == 0 ||Math.pow(2,parameterAnzahl) != ergebnisVektor.length || !containgOnlyZerosAndOnes()) throw new IllegalStateException(__EXCEPTION_Ergebnisvektorinitialisierung);
+        return true;
+    }
+
+    private boolean containgOnlyZerosAndOnes() {
+        for (int i : ergebnisVektor)
+            if (i != 1 && i != 0)
+                return false;
         return true;
     }
 }
