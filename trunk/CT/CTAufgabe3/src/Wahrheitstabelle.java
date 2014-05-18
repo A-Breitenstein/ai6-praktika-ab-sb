@@ -13,13 +13,16 @@ public class Wahrheitstabelle {
     private Set<Integer> testCases;
     private boolean testCasesCreated;
 
-    final String __EXCEPTION_Ergebnisvektorinitialisierung = "ErgebnisVektor ist nicht richtig initialisiert: Ergebnisvektor ist null oder leer";
+    final String __EXCEPTION_Ergebnisvektorinitialisierung = "ErgebnisVektor ist nicht richtig initialisiert: Ergebnisvektor ist null, leer oder anzahl der Elemente entspricht nicht 2^n|n € N+";
 
-    private Wahrheitstabelle(int[] ergebnisVektor, int parameterAnzahl) {
+    private Wahrheitstabelle(int[] ergebnisVektor) {
         this.ergebnisVektor = ergebnisVektor;
-        this.parameterAnzahl = parameterAnzahl;
+        if (ergebnisVektor != null)
+            this.parameterAnzahl = (int)(Math.log(ergebnisVektor.length)/ Math.log(2));
         this.testCases = new HashSet<Integer>();
         this.testCasesCreated = false;
+
+        __checkErgebnisvektor();
     }
 
     /**
@@ -28,7 +31,6 @@ public class Wahrheitstabelle {
      * @return Testcases as Set, or an empty Set if ergebnisVektor is not correct initialized
      */
     public Set<Integer> evaluateTestcases() {
-        if (__checkErgebnisvektor()) {
             int currentVal = 0;
             int observedVal = 0;
             int validNeighbourPosition = 0;
@@ -58,12 +60,10 @@ public class Wahrheitstabelle {
             }
             testCasesCreated = true;
             return testCases;
-        }
-        return new HashSet<Integer>();
     }
 
-    public static Wahrheitstabelle create(int[] ergebnisvektor, int parameterAnzahl) {
-        return new Wahrheitstabelle(ergebnisvektor, parameterAnzahl);
+    public static Wahrheitstabelle create(int[] ergebnisvektor) {
+        return new Wahrheitstabelle(ergebnisvektor);
     }
 
     @Override
@@ -91,11 +91,9 @@ public class Wahrheitstabelle {
      * For each index the print will look: eg. index = 0, result = 1 -> 1|000
      */
     public void printAsMap() {
-        if (__checkErgebnisvektor()) {
             for (int i = 0; i < ergebnisVektor.length; i++) {
                 System.out.println("" + ergebnisVektor[i] + "|" + resolveBitLenghtFault(i));
             }
-        }
     }
 
     /**
@@ -122,7 +120,6 @@ public class Wahrheitstabelle {
      * If index is a Testcase, it will be marked with " -> T" for T is Testcase
      */
     public void printAsMapAndMarkedTestcases() {
-        if (__checkErgebnisvektor()) {
             if (!testCasesCreated)
                 evaluateTestcases();
             String output;
@@ -130,7 +127,6 @@ public class Wahrheitstabelle {
                 output = ergebnisVektor[i] + "|" + resolveBitLenghtFault(i);
                 System.out.println(((testCases.contains(Integer.valueOf(i))) ? (output + " -> T") : (output)));
             }
-        }
     }
 
     /**

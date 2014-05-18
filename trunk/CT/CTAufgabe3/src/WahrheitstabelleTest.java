@@ -10,12 +10,12 @@ public class WahrheitstabelleTest {
     public void testEvaluateTestcases() throws Exception {
         Wahrheitstabelle wt1 = Wahrheitstabelle.create(new int[]{
                 1, 0, 0, 0, 1, 0, 1, 0
-        }, 3);
+        });
         assertEquals(wt1.evaluateTestcases().toString(),"[0, 1, 2, 4, 5, 6, 7]");
 
         Wahrheitstabelle wt2 = Wahrheitstabelle.create(new int[]{
                 0, 1, 0, 0, 0, 0, 0, 0
-        }, 3);
+        });
         assertEquals(wt2.evaluateTestcases().toString(),"[0, 1, 3, 5]");
     }
 
@@ -23,17 +23,17 @@ public class WahrheitstabelleTest {
     public void testFlipBitAtPosition() throws Exception {
         Wahrheitstabelle wt1 = Wahrheitstabelle.create(new int[]{
                 0, 1, 1, 0, 1, 0, 1, 0
-        }, 3);
+        });
 
         assertTrue(wt1.flipBitAtPosition(1, 3) == 9);
         assertFalse(wt1.flipBitAtPosition(1, 4) == 9);
     }
 
     @Test
-    public void testResolveBitLenghtFault() throws Exception {
+    public void testResolveBitLengthFault() throws Exception {
         Wahrheitstabelle wt1 = Wahrheitstabelle.create(new int[]{
                 0, 1, 1, 0, 1, 0, 1, 0
-        }, 3);
+        });
 
         assertTrue(wt1.resolveBitLenghtFault(7).equals("111"));
         assertTrue(wt1.resolveBitLenghtFault(6).equals("110"));
@@ -50,7 +50,7 @@ public class WahrheitstabelleTest {
     public void test__checkErgebnisvektor() throws Exception {
         Wahrheitstabelle wt1 = Wahrheitstabelle.create(new int[]{
                 0, 1, 1, 0, 1, 0, 1, 0
-        }, 3);
+        });
         assertTrue(wt1.__checkErgebnisvektor());
     }
 
@@ -58,7 +58,7 @@ public class WahrheitstabelleTest {
     public void test__checkErgebnisvektorException_case1() throws Exception {
         Wahrheitstabelle wt1 = Wahrheitstabelle.create(new int[]{
                 0, 1, 1, 0, 1, 0, 1, 0,0,0
-        }, 3);
+        });
 
         wt1.__checkErgebnisvektor();
     }
@@ -67,14 +67,14 @@ public class WahrheitstabelleTest {
     public void test__checkErgebnisvektorException_case2() throws Exception {
         Wahrheitstabelle wt2 = Wahrheitstabelle.create(new int[]{
 
-        }, 3);
+        });
 
         wt2.__checkErgebnisvektor();
     }
 
     @Test(expected = IllegalStateException.class)
     public void test__checkErgebnisvektorException_case3() throws Exception {
-        Wahrheitstabelle wt3 = Wahrheitstabelle.create(null, 3);
+        Wahrheitstabelle wt3 = Wahrheitstabelle.create(null);
 
         wt3.__checkErgebnisvektor();
     }
