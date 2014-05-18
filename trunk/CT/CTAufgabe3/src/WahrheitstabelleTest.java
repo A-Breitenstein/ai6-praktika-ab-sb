@@ -59,23 +59,20 @@ public class WahrheitstabelleTest {
         Wahrheitstabelle wt1 = Wahrheitstabelle.create(new int[]{
                 0, 1, 1, 0, 1, 0, 1, 0,0,0
         });
-
-        wt1.__checkErgebnisvektor();
     }
 
     @Test(expected = IllegalStateException.class)
     public void test__checkErgebnisvektorException_case2() throws Exception {
-        Wahrheitstabelle wt2 = Wahrheitstabelle.create(new int[]{
-
-        });
-
-        wt2.__checkErgebnisvektor();
+        Wahrheitstabelle wt2 = Wahrheitstabelle.create(new int[]{});
     }
 
     @Test(expected = IllegalStateException.class)
     public void test__checkErgebnisvektorException_case3() throws Exception {
         Wahrheitstabelle wt3 = Wahrheitstabelle.create(null);
+    }
 
-        wt3.__checkErgebnisvektor();
+    @Test(expected = IllegalStateException.class)
+    public void test__checkErgebnisvektorException_case4() throws Exception {
+        Wahrheitstabelle wt4 = Wahrheitstabelle.create(new int[]{1,0,2,1});
     }
 }
