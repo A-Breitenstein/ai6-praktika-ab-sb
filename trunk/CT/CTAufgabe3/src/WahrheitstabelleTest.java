@@ -11,12 +11,12 @@ public class WahrheitstabelleTest {
         Wahrheitstabelle wt1 = Wahrheitstabelle.create(new int[]{
                 1, 0, 0, 0, 1, 0, 1, 0
         });
-        assertEquals(wt1.evaluateTestcases().toString(),"[0, 1, 2, 4, 5, 6, 7]");
+        assertEquals(wt1.evaluateTestcases().toString(), "[0, 1, 2, 4, 5, 6, 7]");
 
         Wahrheitstabelle wt2 = Wahrheitstabelle.create(new int[]{
                 0, 1, 0, 0, 0, 0, 0, 0
         });
-        assertEquals(wt2.evaluateTestcases().toString(),"[0, 1, 3, 5]");
+        assertEquals(wt2.evaluateTestcases().toString(), "[0, 1, 3, 5]");
     }
 
     @Test
@@ -57,7 +57,7 @@ public class WahrheitstabelleTest {
     @Test(expected = IllegalStateException.class)
     public void test__checkErgebnisvektorException_case1() throws Exception {
         Wahrheitstabelle wt1 = Wahrheitstabelle.create(new int[]{
-                0, 1, 1, 0, 1, 0, 1, 0,0,0
+                0, 1, 1, 0, 1, 0, 1, 0, 0, 0
         });
     }
 
@@ -73,6 +73,6 @@ public class WahrheitstabelleTest {
 
     @Test(expected = IllegalStateException.class)
     public void test__checkErgebnisvektorException_case4() throws Exception {
-        Wahrheitstabelle wt4 = Wahrheitstabelle.create(new int[]{1,0,2,1});
+        Wahrheitstabelle wt4 = Wahrheitstabelle.create(new int[]{1, 0, 2, 1});
     }
 }
