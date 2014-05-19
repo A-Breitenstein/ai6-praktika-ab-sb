@@ -13,12 +13,12 @@ public class Wahrheitstabelle {
     private Set<Integer> testCases;
     private boolean testCasesCreated;
 
-    final String __EXCEPTION_Ergebnisvektorinitialisierung = "ErgebnisVektor ist nicht richtig initialisiert: Ergebnisvektor ist null, leer oder anzahl der Elemente entspricht nicht 2^n|n € N+";
+    private final String __EXCEPTION_Ergebnisvektorinitialisierung = "ErgebnisVektor ist nicht richtig initialisiert: Ergebnisvektor ist null, leer oder anzahl der Elemente entspricht nicht 2^n|n € N+";
 
     private Wahrheitstabelle(int[] ergebnisVektor) {
         this.ergebnisVektor = ergebnisVektor;
         if (ergebnisVektor != null)
-            this.parameterAnzahl = (int)(Math.log(ergebnisVektor.length)/ Math.log(2));
+            this.parameterAnzahl = (int) (Math.log(ergebnisVektor.length) / Math.log(2));
         this.testCases = new HashSet<Integer>();
         this.testCasesCreated = false;
 
@@ -31,35 +31,35 @@ public class Wahrheitstabelle {
      * @return Testcases as Set, or an empty Set if ergebnisVektor is not correct initialized
      */
     public Set<Integer> evaluateTestcases() {
-            int currentVal = 0;
-            int observedVal = 0;
-            int validNeighbourPosition = 0;
-            boolean validCurrentValue;
+        int currentVal = 0;
+        int observedVal = 0;
+        int validNeighbourPosition = 0;
+        boolean validCurrentValue;
 
-            for (int i = 0; i < this.ergebnisVektor.length - 1; i++) { //length-1 weil der die letzte stelle nicht interessiert
+        for (int i = 0; i < this.ergebnisVektor.length - 1; i++) { //length-1 weil der die letzte stelle nicht interessiert
 
-                validCurrentValue = false;
-                currentVal = this.ergebnisVektor[i];
+            validCurrentValue = false;
+            currentVal = this.ergebnisVektor[i];
 
-                for (int j = 0; j <= this.parameterAnzahl; j++) {
-                    try {
-                        validNeighbourPosition = flipBitAtPosition(i, j);
-                        observedVal = this.ergebnisVektor[validNeighbourPosition];
+            for (int j = 0; j <= this.parameterAnzahl; j++) {
+                try {
+                    validNeighbourPosition = flipBitAtPosition(i, j);
+                    observedVal = this.ergebnisVektor[validNeighbourPosition];
 
-                        if (currentVal != observedVal) {
-                            testCases.add(Integer.valueOf(validNeighbourPosition));
-                            validCurrentValue = true;
-                        }
-                    } catch (ArrayIndexOutOfBoundsException e) {
-                        break;
+                    if (currentVal != observedVal) {
+                        testCases.add(Integer.valueOf(validNeighbourPosition));
+                        validCurrentValue = true;
                     }
+                } catch (ArrayIndexOutOfBoundsException e) {
+                    break;
                 }
-
-                if (validCurrentValue)
-                    testCases.add(Integer.valueOf(i));
             }
-            testCasesCreated = true;
-            return testCases;
+
+            if (validCurrentValue)
+                testCases.add(Integer.valueOf(i));
+        }
+        testCasesCreated = true;
+        return testCases;
     }
 
     public static Wahrheitstabelle create(int[] ergebnisvektor) {
@@ -79,9 +79,9 @@ public class Wahrheitstabelle {
      * Flips a Bit at a chosen position in the binary presentation
      * Example value = 1 (0b00000001), position = 3 -> return = 9 (0b00001001)
      *
-     * @param value is the number which bit will get flipped, lol
+     * @param value    is the number which bit will get flipped, lol
      * @param position of the to be flipped bit
-     * @return
+     * @return new value with flipped bit
      */
     public int flipBitAtPosition(int value, int position) {
         return value ^ (1 << position);
@@ -91,9 +91,9 @@ public class Wahrheitstabelle {
      * For each index the print will look: eg. index = 0, result = 1 -> 1|000
      */
     public void printAsMap() {
-            for (int i = 0; i < ergebnisVektor.length; i++) {
-                System.out.println("" + ergebnisVektor[i] + "|" + resolveBitLenghtFault(i));
-            }
+        for (int i = 0; i < ergebnisVektor.length; i++) {
+            System.out.println("" + ergebnisVektor[i] + "|" + resolveBitLenghtFault(i));
+        }
     }
 
     /**
@@ -120,13 +120,13 @@ public class Wahrheitstabelle {
      * If index is a Testcase, it will be marked with " -> T" for T is Testcase
      */
     public void printAsMapAndMarkedTestcases() {
-            if (!testCasesCreated)
-                evaluateTestcases();
-            String output;
-            for (int i = 0; i < ergebnisVektor.length; i++) {
-                output = ergebnisVektor[i] + "|" + resolveBitLenghtFault(i);
-                System.out.println(((testCases.contains(Integer.valueOf(i))) ? (output + " -> T") : (output)));
-            }
+        if (!testCasesCreated)
+            evaluateTestcases();
+        String output;
+        for (int i = 0; i < ergebnisVektor.length; i++) {
+            output = ergebnisVektor[i] + "|" + resolveBitLenghtFault(i);
+            System.out.println(((testCases.contains(Integer.valueOf(i))) ? (output + " -> T") : (output)));
+        }
     }
 
     /**
@@ -136,7 +136,8 @@ public class Wahrheitstabelle {
      * @return true if correct initialized
      */
     public boolean __checkErgebnisvektor() {
-        if ( ergebnisVektor == null || ergebnisVektor.length == 0 ||Math.pow(2,parameterAnzahl) != ergebnisVektor.length || !containgOnlyZerosAndOnes()) throw new IllegalStateException(__EXCEPTION_Ergebnisvektorinitialisierung);
+        if (ergebnisVektor == null || ergebnisVektor.length == 0 || Math.pow(2, parameterAnzahl) != ergebnisVektor.length || !containgOnlyZerosAndOnes())
+            throw new IllegalStateException(__EXCEPTION_Ergebnisvektorinitialisierung);
         return true;
     }
 
