@@ -140,6 +140,11 @@ public class Wahrheitstabelle {
         return true;
     }
 
+    /**
+     * Checks if ergebnisVektor is only containg 0 and 1
+     *
+     * @return true if no other numbers than 0 or 1 are found
+     */
     private boolean containgOnlyZerosAndOnes() {
         for (int i : ergebnisVektor)
             if (i != 1 && i != 0)
