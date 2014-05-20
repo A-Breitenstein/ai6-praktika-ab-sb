@@ -5,10 +5,11 @@
  */
 class MMTestcaseGenerator {
     public static void main(String[] args) {
-        int[] ergebnisvektor = new int[]{1, 0, 0, 0, 1, 0, 1, 0};
+        int[] ergebnisvektor = new int[]{1, 0, 0, 0, 1, 0, 1, 1};
         Wahrheitstabelle t = Wahrheitstabelle.create(ergebnisvektor);
 
-        t.evaluateTestcases();
+        t.evaluateMehrfachTestcases();
+        t.evaluateEinfachTestcases();
         System.out.println(t);
 
         System.out.println("---Map---");
@@ -16,5 +17,7 @@ class MMTestcaseGenerator {
 
         System.out.println("---Map with Testcases---");
         t.printAsMapAndMarkedTestcases();
+
+        System.out.println("\nAbdeckung: " + t.prozentualeAbdeckung());
     }
 }
