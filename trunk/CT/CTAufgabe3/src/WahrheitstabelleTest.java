@@ -11,12 +11,12 @@ public class WahrheitstabelleTest {
         Wahrheitstabelle wt1 = Wahrheitstabelle.create(new int[]{
                 1, 0, 0, 0, 1, 0, 1, 0
         });
-        assertEquals(wt1.evaluateTestcases().toString(), "[0, 1, 2, 4, 5, 6, 7]");
+        assertEquals(wt1.evaluateMehrfachTestcases().toString(), "[0, 1, 2, 4, 5, 6, 7]");
 
         Wahrheitstabelle wt2 = Wahrheitstabelle.create(new int[]{
                 0, 1, 0, 0, 0, 0, 0, 0
         });
-        assertEquals(wt2.evaluateTestcases().toString(), "[0, 1, 3, 5]");
+        assertEquals(wt2.evaluateMehrfachTestcases().toString(), "[0, 1, 3, 5]");
     }
 
     @Test
