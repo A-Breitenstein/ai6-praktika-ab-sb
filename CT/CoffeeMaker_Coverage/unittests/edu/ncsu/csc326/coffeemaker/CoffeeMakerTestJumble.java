@@ -58,8 +58,17 @@ public class CoffeeMakerTestJumble extends TestCase {
         r5.setAmtChocolate(0);
 	}
 
+	public void testContructor(){
+		CoffeeMaker cmNew = new CoffeeMaker();
+		assertTrue(cmNew.addRecipe(r1));
+		assertTrue(cmNew.addRecipe(r2));
+		assertTrue(cmNew.addRecipe(r3));
+		assertTrue(cmNew.addRecipe(r4));
+		assertFalse(cmNew.addRecipe(r5));
+	}
+	
     public void testBezahlZuWenig() {
-        cm.addRecipe(r1);
+        cm.addRecipe(r1);       
         assertTrue(cm.makeCoffee(r1, 0) == 0);
     }
     
@@ -70,6 +79,7 @@ public class CoffeeMakerTestJumble extends TestCase {
 
 	public void testAddRecipe() {
 		assertTrue(cm.addRecipe(r1));
+		assertFalse(cm.addRecipe(r1));
 	}
     public void testAddRecipedouble() {
 		assertTrue(cm.addRecipe(r1));
@@ -80,7 +90,7 @@ public class CoffeeMakerTestJumble extends TestCase {
 		assertTrue(cm.addRecipe(r2));
 		assertTrue(cm.addRecipe(r3));
 		assertTrue(cm.addRecipe(r4));
-		assertFalse(cm.addRecipe(r5));
+		assertFalse(cm.addRecipe(r5));		
 	}
     public void testAddRecipeEditMax() {
 		assertTrue(cm.addRecipe(r1));
@@ -108,6 +118,20 @@ public class CoffeeMakerTestJumble extends TestCase {
         inventory.setChocolate(0);
         inventory.setCoffee(0);
         inventory.setMilk(0);
+        inventory.setSugar(0);
+
+        assertFalse(inventory.enoughIngredients(recipe));
+        
+        inventory.setChocolate(10);
+        inventory.setCoffee(10);
+        inventory.setMilk(0);
+        inventory.setSugar(10);
+
+        assertFalse(inventory.enoughIngredients(recipe));
+        
+        inventory.setChocolate(10);
+        inventory.setCoffee(10);
+        inventory.setMilk(10);
         inventory.setSugar(0);
 
         assertFalse(inventory.enoughIngredients(recipe));
@@ -257,7 +281,11 @@ public class CoffeeMakerTestJumble extends TestCase {
     }
     public void testDeleteRecipe() {
         cm.addRecipe(r1);
-        assertTrue(cm.deleteRecipe(r1));
+        cm.addRecipe(r2);
+        cm.addRecipe(r3);
+        cm.addRecipe(r4);
+        assertTrue(cm.deleteRecipe(r4));
+        assertTrue(cm.deleteRecipe(r3));
     }
 
     public void testInventoryToString() {
