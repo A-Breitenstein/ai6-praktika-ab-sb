@@ -32,7 +32,6 @@ public class Receiver  implements Runnable{
             long starttime = System.currentTimeMillis();
             for (int i = 1; i < Config.test; i++) {
                 socketChannel.read(bb);
-                System.out.println(bb.get(0));
                 bb.clear();
                 bb.get(bbArray,0,bbArray.length);
             }
@@ -45,10 +44,10 @@ public class Receiver  implements Runnable{
             float[] fiffy = new float[7];
             ByteBuffer.wrap(bitty).asFloatBuffer().get(fiffy);
 
-            System.out.println("0x" + Integer.toHexString((int) bb.get(0)));
-            for (float v : fiffy) {
-                System.out.println(v);
-            }
+//            System.out.println("0x" + Integer.toHexString((int) bb.get(0)));
+//            for (float v : fiffy) {
+//                System.out.println(v);
+//            }
             endTime = System.currentTimeMillis();
             System.out.println("elapsed Time: in milli "+(endTime-starttime));
         } catch (IOException e) {
