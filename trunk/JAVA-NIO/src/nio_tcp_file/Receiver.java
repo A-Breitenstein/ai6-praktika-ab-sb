@@ -51,7 +51,7 @@ public class Receiver  implements Runnable{
             final String filenameSTR = fileNameCHAR.toString();
 
             System.out.println("Getting File Size");
-            //FileSize <<<---- int nur max 2GB Datei, Long als String oder byteArray schicken
+            //FileSize <<<---- int nur max 2GB Datei, Long als String oder byteArray schicken oder wie in ad
             ByteBuffer fileSize = ByteBuffer.allocateDirect(4);// ein int sind 32bit = 4Byte
             IntBuffer fileSizeINT = fileSize.asIntBuffer();
             socketChannel.read(fileSize);
@@ -61,8 +61,10 @@ public class Receiver  implements Runnable{
             System.out.println("Getting File");
             //File
             ByteBuffer file = ByteBuffer.allocateDirect(sizeOfFileINT);
-            while(file.hasRemaining())
+            while (file.hasRemaining()) {
+                System.out.println((file.limit() / 100 * file.position()) +"%");
                 socketChannel.read(file);
+            }
 
             final String uri = "C:\\Users\\Akatsuki\\Desktop\\" + filenameSTR;
             Path path = Paths.get(uri);
