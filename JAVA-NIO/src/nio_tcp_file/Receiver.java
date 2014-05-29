@@ -7,13 +7,16 @@ import config.Config;
 import java.io.IOException;
 import java.net.InetAddress;
 import java.net.InetSocketAddress;
+import java.net.SocketOptions;
 import java.nio.ByteBuffer;
 import java.nio.CharBuffer;
 import java.nio.IntBuffer;
+import java.nio.LongBuffer;
 import java.nio.channels.FileChannel;
 import java.nio.channels.SocketChannel;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.ArrayList;
 
 import static java.nio.file.StandardOpenOption.*;
 
@@ -30,7 +33,7 @@ public class Receiver  implements Runnable{
         try {
             SocketChannel socketChannel = SocketChannel.open();
             final String address = InetAddress.getLocalHost().toString();
-            socketChannel.connect(new InetSocketAddress("192.168.1.18", 50000));
+            socketChannel.connect(new InetSocketAddress(address, 50000));
             long endTime;
             long starttime = System.currentTimeMillis();
 
@@ -50,21 +53,39 @@ public class Receiver  implements Runnable{
 
             final String filenameSTR = fileNameCHAR.toString();
 
-            System.out.println("Getting File Size");
-            //FileSize <<<---- int nur max 2GB Datei, Long als String oder byteArray schicken oder wie in ad
-            ByteBuffer fileSize = ByteBuffer.allocateDirect(4);// ein int sind 32bit = 4Byte
-            IntBuffer fileSizeINT = fileSize.asIntBuffer();
-            socketChannel.read(fileSize);
+            System.out.println("Getting BufferSize");
+            //Buffersize
+            ByteBuffer bufferSize = ByteBuffer.allocateDirect(8);
+            LongBuffer bufferSizeL = bufferSize.asLongBuffer();
+            socketChannel.read(bufferSize);
 
-            final int sizeOfFileINT = fileSizeINT.get();
+            final long sizeOfBufferL = bufferSizeL.get();
+
+            System.out.println("Getting runs");
+            //Buffersize
+            ByteBuffer runsBuffer = ByteBuffer.allocateDirect(8);
+            LongBuffer runsL = runsBuffer.asLongBuffer();
+            socketChannel.read(runsBuffer);
+
+            final long runs = runsL.get();
+
+            System.out.println("Getting extrabuffer");
+            //Buffersize
+            ByteBuffer extraBuffer = ByteBuffer.allocateDirect(8);
+            LongBuffer extraBufferL = extraBuffer.asLongBuffer();
+            socketChannel.read(extraBuffer);
+
+            final long extraBufferSize = extraBufferL.get();
 
             System.out.println("Getting File");
             //File
-            ByteBuffer file = ByteBuffer.allocateDirect(sizeOfFileINT);
+            ByteBuffer file = ByteBuffer.allocateDirect((int)sizeOfBufferL);
+            //TODO: REST abändern
             while (file.hasRemaining()) {
-                System.out.println((file.limit() / 100 * file.position()) +"%");
+                System.out.println((100.f/file.limit() * file.position()) +"%");
                 socketChannel.read(file);
             }
+            System.out.println(100 +"%");
 
             final String uri = "C:\\Users\\Akatsuki\\Desktop\\" + filenameSTR;
             Path path = Paths.get(uri);
