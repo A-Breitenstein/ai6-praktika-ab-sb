@@ -30,7 +30,8 @@ public class Receiver  implements Runnable{
             byte[] bbArray = new byte[29];
             long endTime;
             long starttime = System.currentTimeMillis();
-            for (int i = 1; i < Config.test; i++) {
+
+            for (int i = 0; i < Config.test; i++) {
                 socketChannel.read(bb);
                 bb.clear();
                 bb.get(bbArray,0,bbArray.length);

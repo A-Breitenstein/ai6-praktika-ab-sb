@@ -7,9 +7,17 @@ import java.io.IOException;
 import java.net.InetSocketAddress;
 import java.nio.ByteBuffer;
 import java.nio.FloatBuffer;
+import java.nio.MappedByteBuffer;
+import java.nio.channels.FileChannel;
 import java.nio.channels.ServerSocketChannel;
 import java.nio.channels.SocketChannel;
-import java.util.Arrays;
+import java.nio.file.OpenOption;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.StandardOpenOption;
+import java.util.ArrayList;
+
+import static java.nio.file.StandardOpenOption.*;
 
 /**
  * Created with IntelliJ IDEA.
@@ -35,13 +43,11 @@ public class Sender implements Runnable{
 
             byte[] sending = new byte[29];
             sending[0] = 7;
-            for (int i = 1; i < sending.length; i++) {
-                sending[i] = bity[i - 1];
-            }
+            System.arraycopy(bity, 0, sending, 1, sending.length - 1);
             ByteBuffer bb = ByteBuffer.allocateDirect(29);
             bb.put(sending);
 
-            for (int i = 1; i < Config.test; i++) {
+            for (int i = 0; i < Config.test; i++) {
                 bb.flip();
                 channel.write(bb);
                 bb.clear();
