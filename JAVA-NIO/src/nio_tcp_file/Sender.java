@@ -6,6 +6,7 @@ import config.Config;
 import java.io.IOException;
 import java.net.InetSocketAddress;
 import java.nio.*;
+import java.nio.channels.AsynchronousSocketChannel;
 import java.nio.channels.FileChannel;
 import java.nio.channels.ServerSocketChannel;
 import java.nio.channels.SocketChannel;
@@ -46,7 +47,7 @@ public class Sender implements Runnable{
             CharBuffer filenameCHAR = filename.asCharBuffer();
             filenameCHAR.put(path.getFileName().toString().toCharArray());
 
-            //FileSize <<<---- int nur max 2GB Datei, Long als String oder byteArray schicken
+            //FileSize <<<---- int nur max 2GB Datei, Long als String oder byteArray schicken  oder wie in ad
             ByteBuffer fileSize = ByteBuffer.allocateDirect(4);
             IntBuffer fileSizeINT = fileSize.asIntBuffer();
             fileSizeINT.put((int)path.toFile().length());
@@ -66,7 +67,7 @@ public class Sender implements Runnable{
             channel.write(filename);
             filename.clear();
 
-            //Send FileSize <<<---- int nur max 2GB Datei, Long als String oder byteArray schicken
+            //Send FileSize <<<---- int nur max 2GB Datei, Long als String oder byteArray schicken  oder wie in ad
             fileSizeINT.flip();
             channel.write(fileSize);
             fileSize.clear();
