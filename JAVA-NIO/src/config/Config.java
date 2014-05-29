@@ -8,7 +8,7 @@ package config;
  * To change this template use File | Settings | File Templates.
  */
 public class Config {
-    public static final int test = 2;
+    public static final int test = 1000000000;
     private static Config ourInstance = new Config();
 
     public static Config getInstance() {
