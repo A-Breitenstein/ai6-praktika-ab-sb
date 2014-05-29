@@ -30,10 +30,11 @@ public class Receiver  implements Runnable{
         try {
             SocketChannel socketChannel = SocketChannel.open();
             final String address = InetAddress.getLocalHost().toString();
-            socketChannel.connect(new InetSocketAddress(InetAddress.getLocalHost(), 50000));
+            socketChannel.connect(new InetSocketAddress("192.168.1.18", 50000));
             long endTime;
             long starttime = System.currentTimeMillis();
 
+            System.out.println("Getting File Length");
             //Filename length
             ByteBuffer fileNameSize = ByteBuffer.allocateDirect(4);// ein int sind 32bit = 4Byte
             IntBuffer fileNameSizeINTBFF = fileNameSize.asIntBuffer();
@@ -41,6 +42,7 @@ public class Receiver  implements Runnable{
 
             final int filenameLengthINT = fileNameSizeINTBFF.get();
 
+            System.out.println("Getting File Name");
             //Filename
             ByteBuffer fileName = ByteBuffer.allocateDirect(filenameLengthINT * 2);//ein char sind 16bit = 2Byte
             CharBuffer fileNameCHAR = fileName.asCharBuffer();
@@ -48,6 +50,7 @@ public class Receiver  implements Runnable{
 
             final String filenameSTR = fileNameCHAR.toString();
 
+            System.out.println("Getting File Size");
             //FileSize <<<---- int nur max 2GB Datei, Long als String oder byteArray schicken
             ByteBuffer fileSize = ByteBuffer.allocateDirect(4);// ein int sind 32bit = 4Byte
             IntBuffer fileSizeINT = fileSize.asIntBuffer();
@@ -55,6 +58,7 @@ public class Receiver  implements Runnable{
 
             final int sizeOfFileINT = fileSizeINT.get();
 
+            System.out.println("Getting File");
             //File
             ByteBuffer file = ByteBuffer.allocateDirect(sizeOfFileINT);
             while(file.hasRemaining())
@@ -62,6 +66,8 @@ public class Receiver  implements Runnable{
 
             final String uri = "C:\\Users\\Akatsuki\\Desktop\\" + filenameSTR;
             Path path = Paths.get(uri);
+
+            System.out.println("Writing File");
             //Write File to Destionation
             FileChannel fileChannel = FileChannel.open(path, CREATE_NEW, WRITE);
             file.flip();
