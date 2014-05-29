@@ -24,6 +24,8 @@ import static java.nio.file.StandardOpenOption.READ;
  */
 public class Sender implements Runnable{
 
+    final private long BUFFER_SIZE = 4194304;//4 MB
+
     @Override
     public void run() {
         try {
@@ -37,6 +39,15 @@ public class Sender implements Runnable{
             ByteBuffer file = ByteBuffer.allocateDirect((int)fileChannel.size());
             file.put(mbb);
 
+            long buffersize = 0, runs = 0, extrabuffer = 0;
+            if (fileChannel.size() <= BUFFER_SIZE) {
+                buffersize = fileChannel.size();
+            } else {
+                buffersize = BUFFER_SIZE;
+                runs = fileChannel.size() / BUFFER_SIZE;
+                extrabuffer = runs * BUFFER_SIZE - fileChannel.size();
+            }
+
 
             ByteBuffer filenameSize = ByteBuffer.allocateDirect(4);// ein int sind 32bit = 4Byte
             IntBuffer filenameSizeINTBFF = filenameSize.asIntBuffer();
@@ -47,10 +58,18 @@ public class Sender implements Runnable{
             CharBuffer filenameCHAR = filename.asCharBuffer();
             filenameCHAR.put(path.getFileName().toString().toCharArray());
 
-            //FileSize <<<---- int nur max 2GB Datei, Long als String oder byteArray schicken  oder wie in ad
-            ByteBuffer fileSize = ByteBuffer.allocateDirect(4);
-            IntBuffer fileSizeINT = fileSize.asIntBuffer();
-            fileSizeINT.put((int)path.toFile().length());
+            //BufferSize
+            ByteBuffer bufferSize = ByteBuffer.allocateDirect(8); // ein long sind 64bit = 8 byte
+            LongBuffer bufferSizeL = bufferSize.asLongBuffer();
+            bufferSizeL.put(buffersize);
+            //runs
+            ByteBuffer runsSize = ByteBuffer.allocateDirect(8); // ein long sind 64bit = 8 byte
+            LongBuffer runsSizeL = runsSize.asLongBuffer();
+            runsSizeL.put(runs);
+            //extrabuffer
+            ByteBuffer extraBufferSize = ByteBuffer.allocateDirect(8); // ein long sind 64bit = 8 byte
+            LongBuffer extraBufferSizeL = extraBufferSize.asLongBuffer();
+            extraBufferSizeL.put(extrabuffer);
 
             //ServerSocket
             ServerSocketChannel ssc = ServerSocketChannel.open();
@@ -67,11 +86,22 @@ public class Sender implements Runnable{
             channel.write(filename);
             filename.clear();
 
-            //Send FileSize <<<---- int nur max 2GB Datei, Long als String oder byteArray schicken  oder wie in ad
-            fileSizeINT.flip();
-            channel.write(fileSize);
-            fileSize.clear();
+                //Send BufferSize
+                bufferSize.flip();
+                channel.write(bufferSize);
+                bufferSize.clear();
 
+                //Send runs
+                runsSize.flip();
+                channel.write(runsSize);
+                runsSize.clear();
+
+                //Send extraBuffer
+                extraBufferSize.flip();
+                channel.write(extraBufferSize);
+                extraBufferSize.clear();
+
+            //TODO:rest abändern
             //Send file
             file.flip();
             while(file.hasRemaining())
