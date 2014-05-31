@@ -107,24 +107,18 @@ public class Sender implements Runnable{
             int currentPosition = 0;
             for (int i = 0; i < runs; i++) {
                 mbb = fileChannel.map(FileChannel.MapMode.READ_ONLY, currentPosition, buffersize);
-                file.put(mbb);
-                file.flip();
-                while (file.hasRemaining()) {
-                    channel.write(file);
+                while (mbb.hasRemaining()) {
+                    channel.write(mbb);
                 }
-                file.clear();
                 currentPosition += buffersize;
 
             }
 
             if (extrabuffer > 0) {
                 mbb = fileChannel.map(FileChannel.MapMode.READ_ONLY, currentPosition, extrabuffer);
-                file.put(mbb);
-                file.flip();
-                while (file.hasRemaining()) {
-                    channel.write(file);
+                while (mbb.hasRemaining()) {
+                    channel.write(mbb);
                 }
-                file.clear();
             }
 
         } catch (IOException e) {
