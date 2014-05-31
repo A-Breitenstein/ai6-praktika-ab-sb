@@ -30,11 +30,11 @@ public class Receiver  implements Runnable{
         try {
             SocketChannel socketChannel = SocketChannel.open();
             final String address = "";
-            socketChannel.connect(new InetSocketAddress(InetAddress.getLocalHost(), 50000));
+            socketChannel.connect(new InetSocketAddress("192.168.1.18", 50000));
             long endTime;
             long starttime = System.currentTimeMillis();
 
-            System.out.println("Getting File Length");
+            System.out.println("Getting File Name Length");
             //Filename length
             ByteBuffer fileNameSize = ByteBuffer.allocateDirect(4);// ein int sind 32bit = 4Byte
             IntBuffer fileNameSizeINTBFF = fileNameSize.asIntBuffer();
@@ -86,7 +86,7 @@ public class Receiver  implements Runnable{
             int currentPosition = 0;
 
             for (int i = 0; i < runs; i++) {
-                System.out.println((100.f/file.limit() * file.position()) +"%");
+//                System.out.println((100.f/(sizeOfBufferL*runs+extraBufferSize) * currentPosition) +"%");
 
                 mbb = fileChannel.map(FileChannel.MapMode.READ_WRITE, currentPosition, sizeOfBufferL);
                 while(file.hasRemaining())
@@ -104,7 +104,7 @@ public class Receiver  implements Runnable{
                 while(file.hasRemaining())
                     socketChannel.read(file);
                 file.flip();
-                mbb.put(file); //nochmal file flip?????
+                mbb.put(file); //nochmal file flip?????    TODO: erst Schreiben wenn die Übertragung fertig ist
                 mbb.force();
                 file.clear();
             }
