@@ -35,13 +35,12 @@ public class Sender implements Runnable{
 
             //File
             FileChannel fileChannel = FileChannel.open(path, READ);
-            MappedByteBuffer mbb = fileChannel.map(FileChannel.MapMode.READ_ONLY, 0, fileChannel.size());
-            ByteBuffer file = ByteBuffer.allocateDirect((int)fileChannel.size());
-            file.put(mbb);
+
 
             long buffersize = 0, runs = 0, extrabuffer = 0;
             if (fileChannel.size() <= BUFFER_SIZE) {
                 buffersize = fileChannel.size();
+                runs = 1;
             } else {
                 buffersize = BUFFER_SIZE;
                 runs = fileChannel.size() / BUFFER_SIZE;
@@ -87,26 +86,46 @@ public class Sender implements Runnable{
             filename.clear();
 
                 //Send BufferSize
-                bufferSize.flip();
+                bufferSizeL.flip();
                 channel.write(bufferSize);
                 bufferSize.clear();
 
                 //Send runs
-                runsSize.flip();
+                runsSizeL.flip();
                 channel.write(runsSize);
                 runsSize.clear();
 
                 //Send extraBuffer
-                extraBufferSize.flip();
+                extraBufferSizeL.flip();
                 channel.write(extraBufferSize);
                 extraBufferSize.clear();
 
-            //TODO:rest abändern
-            //Send file
-            file.flip();
-            while(file.hasRemaining())
-                channel.write(file);
-            file.clear();
+            //FILE SENDING
+            ByteBuffer file = ByteBuffer.allocateDirect((int) buffersize);
+            MappedByteBuffer mbb;
+
+            int currentPosition = 0;
+            for (int i = 0; i < runs; i++) {
+                mbb = fileChannel.map(FileChannel.MapMode.READ_ONLY, currentPosition, buffersize);
+                file.put(mbb);
+                file.flip();
+                while (file.hasRemaining()) {
+                    channel.write(file);
+                }
+                file.clear();
+                currentPosition += buffersize;
+
+            }
+
+            if (extrabuffer > 0) {
+                mbb = fileChannel.map(FileChannel.MapMode.READ_ONLY, currentPosition, extrabuffer);
+                file.put(mbb);
+                file.flip();
+                while (file.hasRemaining()) {
+                    channel.write(file);
+                }
+                file.clear();
+            }
 
         } catch (IOException e) {
 

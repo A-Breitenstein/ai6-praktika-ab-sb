@@ -8,10 +8,7 @@ import java.io.IOException;
 import java.net.InetAddress;
 import java.net.InetSocketAddress;
 import java.net.SocketOptions;
-import java.nio.ByteBuffer;
-import java.nio.CharBuffer;
-import java.nio.IntBuffer;
-import java.nio.LongBuffer;
+import java.nio.*;
 import java.nio.channels.FileChannel;
 import java.nio.channels.SocketChannel;
 import java.nio.file.Path;
@@ -32,8 +29,8 @@ public class Receiver  implements Runnable{
     public void run() {
         try {
             SocketChannel socketChannel = SocketChannel.open();
-            final String address = InetAddress.getLocalHost().toString();
-            socketChannel.connect(new InetSocketAddress(address, 50000));
+            final String address = "";
+            socketChannel.connect(new InetSocketAddress(InetAddress.getLocalHost(), 50000));
             long endTime;
             long starttime = System.currentTimeMillis();
 
@@ -77,30 +74,44 @@ public class Receiver  implements Runnable{
 
             final long extraBufferSize = extraBufferL.get();
 
-            System.out.println("Getting File");
-            //File
-            ByteBuffer file = ByteBuffer.allocateDirect((int)sizeOfBufferL);
-            //TODO: REST abändern
-            while (file.hasRemaining()) {
-                System.out.println((100.f/file.limit() * file.position()) +"%");
-                socketChannel.read(file);
-            }
-            System.out.println(100 +"%");
 
+            //FILE RECEIVING
+            System.out.println("Getting File");
             final String uri = "C:\\Users\\Akatsuki\\Desktop\\" + filenameSTR;
             Path path = Paths.get(uri);
 
-            System.out.println("Writing File");
-            //Write File to Destionation
-            FileChannel fileChannel = FileChannel.open(path, CREATE_NEW, WRITE);
-            file.flip();
-            while(file.hasRemaining())
-                fileChannel.write(file);
+            ByteBuffer file = ByteBuffer.allocateDirect((int) sizeOfBufferL);
+            FileChannel fileChannel = FileChannel.open(path, CREATE_NEW, WRITE, READ);
+            MappedByteBuffer mbb;
+            int currentPosition = 0;
 
+            for (int i = 0; i < runs; i++) {
+                System.out.println((100.f/file.limit() * file.position()) +"%");
 
+                mbb = fileChannel.map(FileChannel.MapMode.READ_WRITE, currentPosition, sizeOfBufferL);
+                while(file.hasRemaining())
+                    socketChannel.read(file);
+                file.flip();
+                mbb.put(file); //nochmal file flip?????
+                mbb.force();
+                file.clear();
+                currentPosition += sizeOfBufferL;
+            }
+
+            if (extraBufferSize > 0) {
+                mbb = fileChannel.map(FileChannel.MapMode.READ_WRITE, currentPosition, extraBufferSize);
+                file.flip();
+                while(file.hasRemaining())
+                    socketChannel.read(file);
+                file.flip();
+                mbb.put(file); //nochmal file flip?????
+                mbb.force();
+                file.clear();
+            }
+            System.out.println(100 +"%");
+            System.out.println("File written");
             endTime = System.currentTimeMillis();
             System.out.println("elapsed Time: in milli "+(endTime-starttime));
-
             System.out.println(filenameSTR);
 
         } catch (IOException e) {
