@@ -2,6 +2,53 @@
 % Datum: 22.05.2014
 :- use_module(library(clpfd)).
 
+%%sodukuh([2,3],[1,9],[[0,0,6],[0,3,7]]):-
+makeMatrix(0,_,Tmp,Out):- Out = Tmp.
+makeMatrix(X,Y,Tmp,Out):-
+
+                     length(Spalte,Y),
+                     append(Tmp,[Spalte],TmpNeu),
+                     Xneu is X-1,
+                     makeMatrix(Xneu,Y,TmpNeu,Out).
+belegungMachen(Matrix,[]).
+belegungMachen(Matrix,[[X,Y,Elem]|Rest]):-
+                                          nth0(X,Matrix,Spalte),
+                                          nth0(Y,Spalte,Elem),
+                                          belegungMachen(Matrix,Rest).
+holeZeile(_,-1,_,Tmp,Out):- Out = Tmp.
+holeZeile(Matrix,X,Y,Tmp,Out):-
+                             nth0(X,Matrix,Spalte),
+                             nth0(Y,Spalte,Feld),
+                             Xneu is X -1,
+                             holeZeile(Matrix,Xneu,Y,[Feld|Tmp],Out).
+
+holeAlleZeilen(Matrix,X,0,Tmp,Out):- Out = Tmp.
+holeAlleZeilen(Matrix,X,Y,Tmp,Out):-
+                                    Yneu is Y-1,
+                                    holeZeile(Matrix,X,Yneu,[],Zeile),
+                                    holeAlleZeilen(Matrix,X,Yneu,[Zeile|Tmp],Out).
+
+holeQuadrant(_,_,_,0,_,_,Tmp,[Out|Tmp]).
+holeQuadrant(AlleZeilen,IndexX,IndexY,Xq,Yq,Berechnung,Tmp,Out):-
+                                                                 IndexZeile is IndexX * Berechnung,
+                                                                 IndexZeileTeil is IndexY * Yq,
+                                                                 nth0(IndexZeile,AlleZeilen,AktuelleZeile),
+                                                                 holeSubList(IndexZeileTeil,Yq,AktuelleZeile,[],Sublist),
+                                                                 XqNeu is Xq - 1,
+                                                                 BerechnungNeu is Berechnung +1,
+                                                                 holeQuadrant(AlleZeilen,IndexX,IndexY,XqNeu,Yq,BerechnungNeu,[Sublist|Tmp],Out).
+
+holeSublist(Start,0,Liste,Tmp,Out) :- Out = Tmp.
+holeSublist(Start,Laenge,Liste,Tmp,Out) :-
+                                        StartNeu is Start + 1,
+                                        LaengeNeu is Laenge - 1,
+                                        nth0(Start,Liste,Elem),
+                                        holeSublist(StartNeu,LaengeNeu,Liste,[Elem|Tmp],Out).
+
+holeAlleQuadranten(AlleZeilen,Xq,Yq,Tmp,Out)
+holeAlleQuadranten(AlleZeilen,Xq,Yq,Tmp,Out):-
+
+
 sodukuh([   M00,M01,M02,      M03,M04,M05,      M06,M07,M08,
             M10,M11,M12,      M13,M14,M15,      M16,M17,M18,
             M20,M21,M22,      M23,M24,M25,      M26,M27,M28,
@@ -64,6 +111,7 @@ Q9 =  [M66,M67,M68,
    Zeile7 = [M60,M61,M62,M63,M64,M65,M66,M67,M68],
    Zeile8 = [M70,M71,M72,M73,M74,M75,M76,M77,M78],
    Zeile9 = [M80,M81,M82,M83,M84,M85,M86,M87,M88],
+
    Spalte1 =[M00,M10,M20,M30,M40,M50,M60,M70,M80],
    Spalte2 =[M01,M11,M21,M31,M41,M51,M61,M71,M81],
    Spalte3 =[M02,M12,M22,M32,M42,M52,M62,M72,M82],
@@ -101,6 +149,7 @@ Q9 =  [M66,M67,M68,
   Spalte7 ins 1..9,
   Spalte8 ins 1..9,
   Spalte9 ins 1..9,
+  
                all_different(Q1),
                all_different(Q2),
                all_different(Q3),
